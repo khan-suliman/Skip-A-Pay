@@ -1,0 +1,17 @@
+:root {
+  --primary: #030359;
+  --blue: #1863d3;
+  --purple: #4d17bd;
+  --light-blue: #1f77cf;
+  --blue-green: #1e95af;
+  --light: #fff;
+  --dark: #000;
+
+  /* WIDTHS */
+  --sidebar: 270px;
+
+  /* SITE TITLE */
+  --title: 28px;
+  --title-color: var(--primary);
+  --title-weight: 900;
+}

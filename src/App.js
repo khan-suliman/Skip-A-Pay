@@ -1,9 +1,20 @@
+import Layout from "./layout";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import SubmittedForm from "./pages/Submitted-Form";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Skip A Pay</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="/submitted-form" element={<SubmittedForm />} />
+          <Route path="/settings" element={<Settings />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

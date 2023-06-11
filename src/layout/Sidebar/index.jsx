@@ -16,7 +16,7 @@ const Sidebar = () => {
   useEffect(() => {
     setTimeout(() => {
       const sidebarItem = sidebarRef.current.querySelector(".sidebar-item");
-      indicatorRef.current.style.height = `calc(${sidebarItem.clientHeight}px - 9px)`;
+      indicatorRef.current.style.height = `calc(${sidebarItem.clientHeight}px - 13px)`;
       setIndicateHeight(sidebarItem.clientHeight);
     }, 50);
   }, []);
@@ -35,7 +35,7 @@ const Sidebar = () => {
           ref={indicatorRef}
           style={{
             transform: `translateX(-50%) translateY(${
-              activeIndex * indicateHeight + 5
+              activeIndex * indicateHeight + 7
             }px)`,
           }}
           className="menu-indicator"

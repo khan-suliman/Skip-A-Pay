@@ -1,5 +1,5 @@
 import {
-  Cog8ToothIcon,
+  Cog6ToothIcon,
   DocumentDuplicateIcon,
   Squares2X2Icon,
 } from "@heroicons/react/24/outline";
@@ -19,7 +19,7 @@ const menuItems = [
   {
     id: "settings",
     title: "Settings",
-    icon: Cog8ToothIcon,
+    icon: Cog6ToothIcon,
     url: "/settings",
   },
 ];

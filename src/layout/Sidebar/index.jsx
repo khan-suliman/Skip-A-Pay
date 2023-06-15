@@ -6,7 +6,7 @@ import Title from "./Title";
 import { useLocation } from "react-router-dom";
 import menuItems from "../../menu-items";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpenSidebar }) => {
   const sidebarRef = useRef();
   const indicatorRef = useRef();
   const location = useLocation();
@@ -16,7 +16,7 @@ const Sidebar = () => {
   useEffect(() => {
     setTimeout(() => {
       const sidebarItem = sidebarRef.current.querySelector(".sidebar-item");
-      indicatorRef.current.style.height = `calc(${sidebarItem.clientHeight}px - 13px)`;
+      indicatorRef.current.style.height = `${sidebarItem.clientHeight - 13}px`;
       setIndicateHeight(sidebarItem.clientHeight);
     }, 50);
   }, []);
@@ -28,15 +28,18 @@ const Sidebar = () => {
   }, [location]);
 
   return (
-    <aside ref={sidebarRef} className="sidebar">
-      <Title />
+    <aside
+      ref={sidebarRef}
+      className={`sidebar ${isOpenSidebar ? "open" : ""}`}
+    >
+      <div className="sidebar-header">
+        <Title />
+      </div>
       <div className="sidebar-menu">
         <div
           ref={indicatorRef}
           style={{
-            transform: `translateX(-50%) translateY(${
-              activeIndex * indicateHeight + 7
-            }px)`,
+            transform: `translateY(${activeIndex * indicateHeight + 7}px)`,
           }}
           className="menu-indicator"
         ></div>

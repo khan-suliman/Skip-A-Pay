@@ -1,36 +1,72 @@
 .sidebar {
+  --spacing: 1.5rem;
+  --spacing-1: 1rem;
+  --sidebar-open: 270px;
+
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   width: var(--sidebar);
-  padding: 1rem 0 1rem 3rem;
+  padding: var(--spacing-1) 0;
   box-sizing: border-box;
+  overflow: hidden;
+  transition: all 300ms ease-in-out;
+  background-color: var(--off-white);
 
-  .title {
-    height: 80px;
-    h2 {
-      font-weight: var(--title-weight);
-      font-size: var(--title);
-      color: var(--title-color);
+  .sidebar-header {
+    padding: 0 var(--spacing-1);
+    width: var(--sidebar-open);
+    box-sizing: border-box;
+    .title {
+      height: 80px;
+      display: flex;
+      // align-items: center;
+
+      .logo {
+        --size: 30px;
+        width: var(--size);
+        height: var(--size);
+
+        color: var(--light);
+        background-color: var(--purple);
+        border-radius: 50px;
+        padding: 5px;
+        margin-right: 32px;
+
+        svg {
+          vertical-align: top;
+        }
+      }
+
+      h2 {
+        font-weight: var(--title-weight);
+        font-size: var(--title);
+        color: var(--title-color);
+        margin: 4px 0 0;
+      }
     }
   }
   &-menu {
     position: relative;
+    width: var(--sidebar-open);
+    padding: 0 var(--spacing);
+    box-sizing: border-box;
     a {
       text-decoration: none;
       .sidebar-item {
-        padding: 1rem 0;
+        padding: var(--spacing-1) 0;
         color: var(--dark);
+        height: fit-content;
         display: flex;
         align-items: center;
         justify-content: flex-start;
         transition: color 300ms ease-in-out;
         .sidebar-icon {
-          margin-right: 15px;
+          padding-right: 25px;
           display: flex;
           svg {
-            width: 1.5rem;
+            width: var(--spacing);
           }
         }
         .sidebar-title {
@@ -44,13 +80,19 @@
     .menu-indicator {
       position: absolute;
       top: 0;
-      left: 35%;
+      left: var(--spacing-1);
       width: calc(100% - 40px);
       border-radius: 20px;
       z-index: -1;
-      transform: translate(-50%);
       transition: 300ms ease-in-out;
       background-color: var(--primary);
+    }
+  }
+  @media screen and (max-width: 992px) {
+    left: -100%;
+    width: var(--sidebar-open);
+    &.open {
+      left: 0;
     }
   }
 }

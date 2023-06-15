@@ -10,13 +10,15 @@ const Layout = () => {
 
   const [sidebar, setSidebar] = useState(false);
   const handleSidebar = () => {
+    setSidebar(!sidebar);
     if (screenWidth <= config.hideSidebar) {
       root.style.setProperty("--sidebar", 0);
-      setSidebar(!sidebar);
     } else {
       root.style.setProperty(
         "--sidebar",
-        root.style.getPropertyValue("--sidebar") === "270px" ? "60px" : "270px"
+        sidebar && root.style.getPropertyValue("--sidebar") === "270px"
+          ? "60px"
+          : "270px"
       );
     }
   };
@@ -26,11 +28,11 @@ const Layout = () => {
   };
   useEffect(() => {
     handleSidebar();
-    console.log("changing", screenWidth);
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div

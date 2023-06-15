@@ -5,8 +5,9 @@ import Navigation from "./Navigation";
 import Title from "./Title";
 import { useLocation } from "react-router-dom";
 import menuItems from "../../menu-items";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
-const Sidebar = ({ isOpenSidebar }) => {
+const Sidebar = ({ isOpenSidebar, handleSidebar }) => {
   const sidebarRef = useRef();
   const indicatorRef = useRef();
   const location = useLocation();
@@ -32,6 +33,9 @@ const Sidebar = ({ isOpenSidebar }) => {
       ref={sidebarRef}
       className={`sidebar ${isOpenSidebar ? "open" : ""}`}
     >
+      <button className="btn toggle-btn" onClick={handleSidebar}>
+        <XMarkIcon />
+      </button>
       <div className="sidebar-header">
         <Title />
       </div>

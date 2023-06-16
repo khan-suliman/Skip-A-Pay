@@ -43,7 +43,7 @@ const Layout = () => {
     >
       <Sidebar handleSidebar={handleSidebar} isOpenSidebar={sidebar} />
       <Header handleClick={handleSidebar} />
-      <div style={{ paddingLeft: "25px" }}>
+      <div style={{ padding: "40px 25px" }}>
         <Outlet />
       </div>
     </div>

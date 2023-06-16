@@ -1,0 +1,10 @@
+.custom-card {
+  padding: 40px 25px;
+  background-color: var(--bg);
+  border-radius: 20px;
+
+  .card-title {
+    font-weight: 700;
+    color: var(--primary);
+  }
+}

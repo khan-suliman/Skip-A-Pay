@@ -1,11 +1,8 @@
 import React from "react";
+import Card from "../components/Card";
 
 const Settings = () => {
-  return (
-    <div>
-      <h1>Settings</h1>
-    </div>
-  );
+  return <Card title="Settings" backgroundColor="var(--magnolia)"></Card>;
 };
 
 export default Settings;

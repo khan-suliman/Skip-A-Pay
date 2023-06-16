@@ -1,10 +1,9 @@
 import React from "react";
+import Card from "../components/Card";
 
 const SubmittedForm = () => {
   return (
-    <div>
-      <h1>Submitted Form</h1>
-    </div>
+    <Card title="Submitted Form" backgroundColor={"var(--isabelline)"}></Card>
   );
 };
 

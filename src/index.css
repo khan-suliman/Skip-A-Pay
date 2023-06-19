@@ -1,5 +1,6 @@
 :root {
   --primary: #030359;
+  --primary-hover: #04047e;
   --blue: #1863d3;
   --purple: #4d17bd;
   --lavender: #e9eaff;
@@ -84,8 +85,23 @@ body {
   font-size: 24px;
 }
 
+.btn-primary {
+  --bs-btn-bg: var(--primary) !important;
+  --bs-btn-border-color: var(--primary) !important;
+  --bs-btn-hover-bg: var(--primary-hover) !important;
+}
+
 @media screen and (max-width: 992px) {
   :root {
     --sidebar: 70px;
+  }
+
+  body.sidebar-open::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
   }
 }

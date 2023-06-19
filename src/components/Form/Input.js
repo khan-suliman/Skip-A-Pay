@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form } from 'react-bootstrap'
 import PropTypes from "prop-types";
-import "./style/input.scss";
+import "./../style/Form/input.scss";
 
 export default function Input({ label, name, type, placeholder, value }) {
     return (

@@ -18,6 +18,14 @@
   --title: 26px;
   --title-color: var(--primary);
   --title-weight: 900;
+
+  /* border radius */
+  --border-radius-1: 0.3rem;
+  --border-radius-2: 12px;
+  --border-radius-3: 20px;
+
+  /* transitions */
+  --transition: all 0.2s;
 }
 
 body {
@@ -33,6 +41,48 @@ body {
   border: 1px solid blue;
 }
 
+/* custom links setting */
+.primary-link {
+  color: var(--primary);
+  transition: var(--transition);
+}
+
+.primary-link:hover {
+  color: var(--purple);
+}
+
+/* font sizes */
+.fs-12 {
+  font-size: 12px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.fs-16 {
+  font-size: 16px;
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.fs-20 {
+  font-size: 20px;
+}
+
+.fs-22 {
+  font-size: 22px;
+}
+
+.fs-22 {
+  font-size: 22px;
+}
+
+.fs-24 {
+  font-size: 24px;
+}
 
 @media screen and (max-width: 992px) {
   :root {

@@ -1,9 +1,10 @@
 import React from "react";
 import { useFormik } from 'formik';
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
 import Card from "components/Card";
-import Input from "components/Input";
+import Input from "components/Form/Input";
 import { Link } from "react-router-dom";
+import Checkbox from "components/Form/Checkbox";
 const Login = () => {
     const formik = useFormik({
         initialValues: {
@@ -20,13 +21,21 @@ const Login = () => {
                 <Col md={5}>
                     <Form onSubmit={formik.handleSubmit}>
                         <Card title='Login'>
+                            {/* Email */}
                             <Input label='Email' name='email' type='email' placeholder='info@test.com' />
                             <Input label='Password' name='password' type='password' placeholder='********' />
+                            <Stack className="mb-3" direction="horizontal">
+                                <Checkbox type={'checkbox'} id={`keep-sign`} label={`Keep me sign in`} name={"keepSign"} />
+                                <Link to="/settings" className="primary-link ms-auto fs-14">Forgot Password?</Link>
+                            </Stack>
+                            <Stack>
+                                <Button as="input" type="submit" value="Submit" />
+                            </Stack>
                         </Card>
                     </Form >
                 </Col>
             </Row>
-        </Container>
+        </Container >
     );
 }
 export default Login;

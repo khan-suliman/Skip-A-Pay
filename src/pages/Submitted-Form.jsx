@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Card from "../components/Card";
+import ReactTable from "../components/Table";
 
 const SubmittedForm = () => {
+  const data = useMemo(
+    () => [
+      { id: 1, name: "John Doe", age: 30 },
+      { id: 2, name: "Jane Smith", age: 25 },
+      { id: 3, name: "Bob Johnson", age: 40 },
+    ],
+    []
+  );
+
+  const columns = useMemo(
+    () => [
+      { Header: "ID", accessor: "id" },
+      { Header: "Name", accessor: "name" },
+      { Header: "Age", accessor: "age" },
+    ],
+    []
+  );
   return (
-    <Card title="Submitted Form" backgroundColor={"var(--isabelline)"}></Card>
+    <Card title="Submitted Form" backgroundColor={"var(--isabelline)"}>
+      <div className="py-3">
+        <ReactTable data={data} columns={columns} />
+      </div>
+    </Card>
   );
 };
 

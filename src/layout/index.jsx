@@ -3,6 +3,8 @@ import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import config from "../config/config";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Layout = () => {
   let root = document.documentElement;
@@ -13,7 +15,13 @@ const Layout = () => {
     setSidebar(!sidebar);
     if (screenWidth <= config.hideSidebar) {
       root.style.setProperty("--sidebar", 0);
+      if (!sidebar) {
+        document.querySelector("body").classList.add("sidebar-open");
+      } else {
+        document.querySelector("body").classList.remove("sidebar-open");
+      }
     } else {
+      document.querySelector("body").classList.remove("sidebar-open");
       root.style.setProperty(
         "--sidebar",
         sidebar && root.style.getPropertyValue("--sidebar") === "270px"
@@ -46,6 +54,7 @@ const Layout = () => {
       <div style={{ padding: "40px 25px" }}>
         <Outlet />
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -3,11 +3,11 @@ import { Form } from 'react-bootstrap'
 import PropTypes from "prop-types";
 import "./../style/Form/input.scss";
 
-export default function Input({ label, name, type, placeholder, value }) {
+export default function Input({ label, name, type, placeholder, value, handleChange }) {
     return (
         <Form.Group className='mb-3'>
             {label ?? <Form.Label className="input-label mb-0">{label}</Form.Label>}
-            <Form.Control className="form-input shadow-none" type={type} placeholder={placeholder} name={name} />
+            <Form.Control onChange={handleChange} className="form-input shadow-none" type={type} placeholder={placeholder} name={name} />
         </Form.Group>
     );
 }

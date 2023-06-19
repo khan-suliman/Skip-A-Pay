@@ -19,9 +19,21 @@
   --title-color: var(--primary);
   --title-weight: 900;
 }
+
 body {
   background-color: var(--off-white) !important;
 }
+
+/* borders */
+.red {
+  border: 1px solid red;
+}
+
+.black {
+  border: 1px solid blue;
+}
+
+
 @media screen and (max-width: 992px) {
   :root {
     --sidebar: 70px;

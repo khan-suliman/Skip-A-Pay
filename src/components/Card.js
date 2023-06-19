@@ -1,15 +1,19 @@
 import React from "react";
 import "./style/card.scss";
+import { Stack } from "react-bootstrap";
 
-const Card = ({ children, title, backgroundColor, ...props }) => {
+const Card = ({ children, title, actionElement, backgroundColor, ...props }) => {
   return (
-    <section
+    <div
       className="custom-card"
       style={{ "--bg": backgroundColor ? backgroundColor : "var(--lavender)" }}
     >
-      <h1 className="card-title">{title}</h1>
+      <Stack className="align-items-end justify-content-between" direction="horizontal">
+        <h1 className="card-title">{title}</h1>
+        {actionElement ?? actionElement}
+      </Stack>
       {children}
-    </section>
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
-import Card from "../components/Card";
-import FileUpload from "../components/FileUpload";
+import Card from "components/Card";
+import FileUpload from "components/FileUpload";
 import { Formik } from "formik";
 import { Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";

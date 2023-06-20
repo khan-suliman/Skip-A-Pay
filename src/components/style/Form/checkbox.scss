@@ -1,0 +1,16 @@
+.custom-checkbox {
+
+    .form-check-input {
+        width: 20px !important;
+        height: 20px !important;
+        box-shadow: none !important;
+        margin-top: 2px !important;
+        margin-right: 8px !important;
+        border-radius: var(--border-radius-1) !important;
+    }
+
+    // Label
+    .form-check-label {
+        font-size: 14px !important;
+    }
+}

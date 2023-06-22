@@ -1,0 +1,12 @@
+.form-input {
+    padding: 10px !important;
+}
+
+// focus input
+.form-control:focus {
+    border-color: var(--purple) !important;
+}
+
+.form-control::-webkit-input-placeholder {
+    vertical-align: middle !important;
+}

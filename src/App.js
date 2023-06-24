@@ -14,7 +14,7 @@ function App() {
           <Route path="/submitted-form" element={<SubmittedForm />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
-        <Route path='/login' element={<Login />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

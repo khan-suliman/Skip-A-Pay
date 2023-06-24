@@ -6,9 +6,20 @@ import {
 import React from "react";
 import { Stack } from "react-bootstrap";
 import "./style.scss";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, reset } from "features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ handleClick }) => {
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(reset());
+    dispatch(logout());
+    navigate("/login");
+  };
+
   return (
     <header className="top-navbar">
       <Stack direction="horizontal" gap={3}>
@@ -20,16 +31,19 @@ const Header = ({ handleClick }) => {
           {/* <img src='' alt="profile" /> */}
           <div className="profile-dropdown">
             <ul>
-              <li>User Name</li>
+              <li>{user?.name}</li>
               <li>
-                <Link to="/">
-                  <Stack direction="horizontal" className="auth" gap={2}>
-                    <span>
-                      <ArrowLeftOnRectangleIcon />
-                    </span>
-                    <span>Logout</span>
-                  </Stack>
-                </Link>
+                <Stack
+                  direction="horizontal"
+                  className="auth"
+                  gap={2}
+                  onClick={handleLogout}
+                >
+                  <span>
+                    <ArrowLeftOnRectangleIcon />
+                  </span>
+                  <span>Logout</span>
+                </Stack>
               </li>
             </ul>
           </div>

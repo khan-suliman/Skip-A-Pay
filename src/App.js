@@ -4,6 +4,7 @@ import Dashboard from "pages/Dashboard";
 import SubmittedForm from "pages/Submitted-Form";
 import Settings from "pages/Settings";
 import Login from "pages/Login";
+import ApplyForm from "pages/Apply-Form";
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
           <Route path="/settings" element={<Settings />} />
         </Route>
         <Route path='/login' element={<Login />} />
+        {/* apply form route */}
+        <Route path='/apply' element={<ApplyForm />} />
       </Routes>
     </BrowserRouter>
   );

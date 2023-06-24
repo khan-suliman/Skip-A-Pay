@@ -28,7 +28,7 @@ const Login = () => {
         <Container>
             <ToastContainer />
             <Row className="min-vh-100 align-items-center justify-content-center my-auto">
-                <Col md={5}>
+                <Col md={8} lg={6} xl={5}>
                     <Form onSubmit={formik.handleSubmit}>
                         <Card title='Login'>
                             <div className="mt-5">

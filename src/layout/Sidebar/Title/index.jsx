@@ -1,5 +1,5 @@
 import { Stack } from "react-bootstrap";
-import config from "../../../config/config";
+import config from "config/config";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 
 const Title = () => {

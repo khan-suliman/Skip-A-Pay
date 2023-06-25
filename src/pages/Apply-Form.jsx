@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useFormik } from 'formik';
+import { useFormik } from "formik";
 import { ToastContainer } from "react-toastify";
 import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
 import Card from "components/Card";
 import Input from "components/Form/Input";
-import * as yup from 'yup';
+import * as yup from "yup";
 const ApplyForm = () => {
     const [validated, setValidated] = useState(false);
     // const navigate = useNavigate();
@@ -89,5 +89,5 @@ const ApplyForm = () => {
             </Row>
         </Container >
     );
-}
+};
 export default ApplyForm;

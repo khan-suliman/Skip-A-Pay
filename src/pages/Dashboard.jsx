@@ -1,8 +1,8 @@
 import React from "react";
-import IconCard from "../sections/dashboard/IconCard";
+import IconCard from "sections/dashboard/IconCard";
 import { BanknotesIcon, UserGroupIcon } from "@heroicons/react/24/outline";
 import { Col, Row } from "react-bootstrap";
-import Card from "../components/Card";
+import Card from "components/Card";
 
 const Dashboard = () => {
   return (

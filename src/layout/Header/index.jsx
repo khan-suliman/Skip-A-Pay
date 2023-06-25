@@ -9,6 +9,7 @@ import "./style.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import axios from "util/axios";
 
 const Header = ({ handleClick }) => {
   const { user } = useSelector((state) => state.auth);
@@ -18,6 +19,10 @@ const Header = ({ handleClick }) => {
     dispatch(reset());
     dispatch(logout());
     navigate("/login");
+  };
+  const handleMe = async () => {
+    let a = await axios.get("/admins/me");
+    console.log(a.data);
   };
 
   return (
@@ -31,7 +36,7 @@ const Header = ({ handleClick }) => {
           {/* <img src='' alt="profile" /> */}
           <div className="profile-dropdown">
             <ul>
-              <li>{user?.name}</li>
+              <li onClick={handleMe}>{user?.name}</li>
               <li>
                 <Stack
                   direction="horizontal"

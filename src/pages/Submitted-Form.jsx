@@ -1,6 +1,6 @@
 import Card from "components/Card";
 import React, { useMemo } from "react";
-import ReactTable from "../components/Table";
+import ReactTable from "components/Table";
 
 const SubmittedForm = () => {
   const data = useMemo(

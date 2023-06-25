@@ -1,4 +1,4 @@
-import menuItems from "../../../menu-items";
+import menuItems from "menu-items";
 import NavItem from "./NavItem";
 
 const Navigation = () => {

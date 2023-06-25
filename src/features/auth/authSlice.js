@@ -1,11 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
-
-// Get user from localStorage
-const user = JSON.parse(localStorage.getItem("user"));
+import axios from "util/axios";
 
 const initialState = {
-  user: user || null,
+  user: null,
+  token: null,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -27,9 +26,9 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   }
 });
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-  await authService.logout();
-});
+// export const logout = createAsyncThunk("auth/logout", async () => {
+//   await authService.logout();
+// });
 
 export const authSlice = createSlice({
   name: "auth",
@@ -41,6 +40,14 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.message = "";
     },
+    logout: (state) => {
+      delete axios.defaults.headers.common.Authorization;
+      return {
+        ...state,
+        user: null,
+        token: null,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -50,16 +57,20 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.user = { ...action.payload.admin, token: action.payload.token };
+        state.user = { ...action.payload.admin };
+        state.token = action.payload.token;
+        axios.defaults.headers.common.Authorization = `Bearer ${action.payload.token}`;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         state.user = null;
+        state.token = null;
+        delete axios.defaults.headers.common.Authorization;
       });
   },
 });
 
-export const { reset } = authSlice.actions;
+export const { reset, logout } = authSlice.actions;
 export default authSlice.reducer;

@@ -5,7 +5,6 @@ import { ToastContainer } from "react-toastify";
 import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
 import Card from "components/Card";
 import Input from "components/Form/Input";
-import { Link } from "react-router-dom";
 import Checkbox from "components/Form/Checkbox";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
@@ -36,7 +35,7 @@ const Login = () => {
       email: "sulimansayed003@gmial.com",
       password: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       try {
         toast.promise(dispatch(login(values)), {
           pending: "Logging in...",

@@ -1,7 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "./../style/Form/checkbox.scss";
+import "../style/Form/checkbox.scss";
 
 export default function Checkbox({ label, name, type, id }) {
   return (

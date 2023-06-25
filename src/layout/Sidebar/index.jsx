@@ -4,7 +4,7 @@ import { Stack } from "react-bootstrap";
 import Navigation from "./Navigation";
 import Title from "./Title";
 import { useLocation } from "react-router-dom";
-import menuItems from "../../menu-items";
+import menuItems from "menu-items";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const Sidebar = ({ isOpenSidebar, handleSidebar }) => {

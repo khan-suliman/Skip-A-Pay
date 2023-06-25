@@ -85,10 +85,11 @@ const Login = () => {
                   id={`keep-sign`}
                   label={`Keep me sign in`}
                   name={"keepSign"}
+                  className="user-select-none"
                 />
-                <Link to="#" className="primary-link ms-auto fs-14">
+                {/* <Link to="#" className="primary-link ms-auto fs-14">
                   Forgot Password?
-                </Link>
+                </Link> */}
               </Stack>
               <Stack className="mt-5">
                 <Button as="input" type="submit" value="Submit" />

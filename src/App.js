@@ -5,10 +5,13 @@ import SubmittedForm from "pages/Submitted-Form";
 import Settings from "pages/Settings";
 import Login from "pages/Login";
 import ApplyForm from "pages/Apply-Form";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import config from "../config/config";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 const Layout = () => {
   let root = document.documentElement;
   let screenWidth = window.innerWidth;
+
+  const { user, token } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const [sidebar, setSidebar] = useState(false);
   const handleSidebar = () => {
@@ -42,6 +44,12 @@ const Layout = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!(user && token)) {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate, user, token]);
   return (
     <div
       style={{
@@ -54,7 +62,6 @@ const Layout = () => {
       <div style={{ padding: "40px 25px" }}>
         <Outlet />
       </div>
-      <ToastContainer />
     </div>
   );
 };

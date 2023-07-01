@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -13,6 +13,7 @@ import { login, reset } from "features/auth/authSlice";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const toastId = useRef(null);
 
   const { user, message, isLoading, isError, isSuccess } = useSelector(
     (state) => state.auth
@@ -20,9 +21,32 @@ const Login = () => {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      if (toastId.current) {
+        toast.update(toastId.current, {
+          render: message,
+          type: "error",
+          isLoading: false,
+          autoClose: 5000,
+          closeButton: true,
+          closeOnClick: true,
+        });
+      } else {
+        toast.error(message);
+      }
     }
     if (isSuccess || user) {
+      if (toastId.current && isSuccess) {
+        toast.update(toastId.current, {
+          render: "Login successful",
+          type: "success",
+          isLoading: false,
+          autoClose: 5000,
+          closeButton: true,
+          closeOnClick: true,
+        });
+      } else if (isSuccess) {
+        toast.success("Login successful");
+      }
       navigate("/");
     }
 
@@ -36,22 +60,11 @@ const Login = () => {
       password: "",
     },
     onSubmit: async (values) => {
-      try {
-        toast.promise(dispatch(login(values)), {
-          pending: "Logging in...",
-          success: "Login successful.",
-          error: "Login failed.",
-        });
-      } catch (error) {
-        console.log(error);
-      }
-      // dispatch(login(values));
-      // if (email.trim() === "abc123@gmail.com" && password === "admin") {
-      //   console.log("true");
-      //   return redirect("/setting");
-      // } else {
-      //   toast.error("Invalid Credentials");
-      // }
+      toastId.current = toast.loading("Logging in...", {
+        autoClose: false,
+        closeOnClick: false,
+      });
+      dispatch(login(values));
     },
   });
   return (

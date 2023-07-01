@@ -9,13 +9,13 @@ const ApplyForm = () => {
     const [validated, setValidated] = useState(false);
     // const navigate = useNavigate();
     const schema = yup.object().shape({
-        fName: yup.string().required(),
-        lName: yup.string().required(),
-        pNumber: yup.string().required(),
-        accNum: yup.string().required(),
-        ssn: yup.string().required(),
-        email: yup.string().email('Invalid Email').required('Required'),
-        cEmail: yup.string().email('Invalid Email').oneOf([yup.ref('email'), null], 'Email doesn\'t match').required('Required')
+        fName: yup.string().required('Field Required'),
+        lName: yup.string().required('Field Required'),
+        pNumber: yup.string().required('Field Required'),
+        accNum: yup.string().required('Field Required'),
+        ssn: yup.string().required('Field Required'),
+        email: yup.string().email('Invalid Email').required('Field Required'),
+        cEmail: yup.string().email('Invalid Email').oneOf([yup.ref('email'), null], 'Email doesn\'t match').required('Field Required')
     });
     const formik = useFormik({
         validationSchema: schema,
@@ -68,7 +68,7 @@ const ApplyForm = () => {
                                     <Input label='Confirm Email' required controlId='controlId-cEmail' name='cEmail' type='email' placeholder='Confirm Email'
                                         handleChange={handleChange} touched={touched.cEmail && !errors.cEmail} error={errors.cEmail} />
                                 </Col>
-                                <Col md={8} className="mt-4">
+                                <Col xs={8} className="mt-4">
                                     <Stack>
                                         <Button as="input" type="submit" value="Get Loan Details" />
                                     </Stack>
@@ -76,7 +76,7 @@ const ApplyForm = () => {
                                     </Stack> */}
                                     {/* <Button as="input" type="reset" value="Reset" /> */}
                                 </Col>
-                                <Col md={4} className="mt-4">
+                                <Col xs={4} className="mt-4">
                                     <Stack>
                                         {/* <Button as="input" type="submit" value="Get Loan Details" /> */}
                                         <Button as="input" type="reset" value="Reset" variant="danger" />

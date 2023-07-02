@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
 import Card from "components/Card";
 import Input from "components/Form/Input";
 import * as yup from "yup";
+import CustomModal from "components/Modal";
 const ApplyForm = () => {
+    const [modalShow, setModalShow] = useState(false);
     const [validated, setValidated] = useState(false);
     // const navigate = useNavigate();
     const schema = yup.object().shape({
@@ -18,7 +20,7 @@ const ApplyForm = () => {
         cEmail: yup.string().email('Invalid Email').oneOf([yup.ref('email'), null], 'Email doesn\'t match').required('Field Required')
     });
     const formik = useFormik({
-        validationSchema: schema,
+        // validationSchema: schema,
         initialValues: {
             email: '',
             password: ''
@@ -26,6 +28,14 @@ const ApplyForm = () => {
         onSubmit: (values) => {
             setValidated(false);
             console.log('submitted Values', values);
+            if (true) {
+                toast.success('Form Submitted');
+                setTimeout(function () {
+                    setModalShow(true);
+                }, 3000);
+            } else {
+                toast.error('You\'re not eligible..!');
+            }
         }
     });
     const { errors, touched, handleSubmit, handleChange } = formik;
@@ -87,6 +97,8 @@ const ApplyForm = () => {
                     </Form >
                 </Col>
             </Row>
+            {/* Form submitted model */}
+            <CustomModal show={modalShow} title={'Loan Details'} onHide={() => setModalShow(false)} />
         </Container >
     );
 };

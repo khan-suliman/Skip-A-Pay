@@ -11,6 +11,7 @@
   --light: #fff;
   --off-white: #f4f7ff;
   --dark: #000;
+  --grey: rgba(141, 136, 136, 0.733);
 
   /* WIDTHS */
   --sidebar: 270px;

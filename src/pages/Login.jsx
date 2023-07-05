@@ -69,7 +69,7 @@ const Login = () => {
   });
   return (
     <Container>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Row className="min-vh-100 align-items-center justify-content-center my-auto">
         <Col md={5}>
           <Form onSubmit={formik.handleSubmit}>

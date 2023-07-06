@@ -1,8 +1,11 @@
 import Card from "components/Card";
 import React, { useMemo } from "react";
 import ReactTable from "components/Table";
+import submittedApplications from "features/admin/users";
 
 const SubmittedForm = () => {
+  const applications = submittedApplications();
+  console.log('applications', applications);
   const data = useMemo(
     () => [
       { id: 1, name: "John Doe", age: 30 },

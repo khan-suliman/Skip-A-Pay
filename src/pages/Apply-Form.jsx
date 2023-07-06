@@ -34,7 +34,6 @@ const ApplyForm = () => {
             });
             const response = await formSubmission(values);
             if (response.status === 201 || response.status === 200) {
-                console.log('here');
                 toast.update(toastId.current, {
                     render: "Form Submitted",
                     type: "success",
@@ -46,7 +45,6 @@ const ApplyForm = () => {
                 setUserDetails(response.data);
                 setModalShow(true);
             } else {
-                console.log('false');
                 toast.update(toastId.current, {
                     render: response.message,
                     type: "error",

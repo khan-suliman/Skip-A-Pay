@@ -1,9 +1,9 @@
 import axios from "util/axios";
 
-// Login user
-const formSubmission = async (data) => {
+// get loans
+export const loans = async () => {
   try {
-    const response = await axios.post("users/loan", data);
+    const response = await axios.get("loans");
     return {
       status: response.status,
       data: response.data,
@@ -15,5 +15,3 @@ const formSubmission = async (data) => {
     };
   }
 };
-
-export default formSubmission;

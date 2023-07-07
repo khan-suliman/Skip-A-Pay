@@ -4,6 +4,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import config from "../config/config";
 import { useSelector } from "react-redux";
+import axios from "util/axios";
 
 const Layout = () => {
   let root = document.documentElement;
@@ -47,7 +48,10 @@ const Layout = () => {
 
   useEffect(() => {
     if (!(user && token)) {
+      delete axios.defaults.headers.common.Authorization;
       navigate("/login", { replace: true });
+    } else {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     }
   }, [navigate, user, token]);
   return (

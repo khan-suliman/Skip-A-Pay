@@ -1,32 +1,47 @@
 import Card from "components/Card";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactTable from "components/Table";
 import submittedApplications from "features/admin/users";
+import { Spinner } from "react-bootstrap";
 
 const SubmittedForm = () => {
-  const applications = submittedApplications();
-  console.log('applications', applications);
-  const data = useMemo(
-    () => [
-      { id: 1, name: "John Doe", age: 30 },
-      { id: 2, name: "Jane Smith", age: 25 },
-      { id: 3, name: "Bob Johnson", age: 40 },
-    ],
-    []
-  );
+  const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const getAllUsers = async () => {
+    let applications = await submittedApplications();
+    setUsers(applications.data);
+    setIsLoading(false);
+  };
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+  const data = useMemo(() => users, [users]);
 
   const columns = useMemo(
     () => [
-      { Header: "ID", accessor: "id" },
-      { Header: "Name", accessor: "name" },
-      { Header: "Age", accessor: "age" },
+      { Header: "First Name", accessor: "firstName" },
+      { Header: "Middle Name", accessor: "middleName" },
+      { Header: "Last Name", accessor: "lastName" },
+      { Header: "Email", accessor: "email" },
+      { Header: "Account Number", accessor: "accountNumber" },
+      { Header: "SSN Number", accessor: "ssnNumber" },
+      { Header: "Phone Number", accessor: "phoneNumber" },
     ],
     []
   );
   return (
     <Card title="Submitted Form" backgroundColor={"var(--isabelline)"}>
       <div className="py-3">
-        <ReactTable data={data} columns={columns} />
+        {isLoading ? (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : (
+          <>
+            {data.length > 0 && <ReactTable data={data} columns={columns} />}
+            {data.length === 0 && <p>No form has been submitted yet.</p>}
+          </>
+        )}
       </div>
     </Card>
   );

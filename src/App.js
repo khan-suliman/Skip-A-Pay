@@ -7,18 +7,22 @@ import Login from "pages/Login";
 import ApplyForm from "pages/Apply-Form";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProtectedRoute from "components/ProtectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={<ProtectedRoute path="/" element={<Layout />} />}
+        >
           <Route index element={<Dashboard />} />
           <Route path="/submitted-form" element={<SubmittedForm />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
-        <Route path="/login" element={<Login />} />
         {/* apply form route */}
         <Route path="/apply" element={<ApplyForm />} />
       </Routes>

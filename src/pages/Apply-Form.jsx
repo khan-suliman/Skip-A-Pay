@@ -21,7 +21,10 @@ const ApplyForm = () => {
     accountNumber: yup
       .number("Please enter integer")
       .required("Field Required"),
-    ssnNumber: yup.number("Please enter integer").required("Field Required"),
+    ssnNumber: yup
+      .string()
+      .matches(/^\d{4}$/, "Enter a valid 4-digit number")
+      .required("Field Required"),
     email: yup.string().email("Invalid Email").required("Field Required"),
     cEmail: yup
       .string()
@@ -38,21 +41,24 @@ const ApplyForm = () => {
         autoClose: false,
         closeOnClick: false,
       });
-      const response = await formSubmission(values);
-      if (response.status === 201 || response.status === 200) {
-        toast.dismiss(toastId.current);
-        setUserDetails(response.data);
-        setModalShow(true);
-      } else {
-        toast.update(toastId.current, {
-          render: response.message,
-          type: "error",
-          isLoading: false,
-          autoClose: 5000,
-          closeButton: true,
-          closeOnClick: true,
-        });
-      }
+      toast.dismiss(toastId.current);
+      setUserDetails(values);
+      setModalShow(true);
+      // const response = await formSubmission(values);
+      // if (response.status === 201 || response.status === 200) {
+      //   toast.dismiss(toastId.current);
+      //   setUserDetails(values);
+      //   setModalShow(true);
+      // } else {
+      //   toast.update(toastId.current, {
+      //     render: response.message,
+      //     type: "error",
+      //     isLoading: false,
+      //     autoClose: 5000,
+      //     closeButton: true,
+      //     closeOnClick: true,
+      //   });
+      // }
     },
   });
   const { errors, touched, handleSubmit, handleChange } = formik;

@@ -12,19 +12,17 @@ import Modal from "react-bootstrap/Modal";
 import ModalComponent1 from "./ModalComponent1";
 import "./style/Modal.scss";
 import { useState } from "react";
+import moment from "moment";
 
 const CustomModal = (props) => {
-  const [radioValue, setRadioValue] = useState(0);
-  console.log(props);
+  const [loan, setLoan] = useState(0);
 
-  const radios = [
-    { name: "Active", value: "1" },
-    { name: "Radio", value: "2" },
-    { name: "Radio", value: "3" },
-    { name: "Radio", value: "4" },
-    { name: "Radio", value: "5" },
-  ];
   const userDetails = props.userdetails;
+
+  let name = userDetails?.firstName;
+  if (userDetails?.middleName) name += " " + userDetails?.middleName;
+  if (userDetails?.lastName) name += " " + userDetails?.lastName;
+
   return (
     <Modal
       {...props}
@@ -42,8 +40,8 @@ const CustomModal = (props) => {
           <Row className="mb-lg-5">
             <Col xs={12} lg={4}>
               <ModalComponent1
-                title={"Name"}
-                subtitle={userDetails?.name}
+                title="Name"
+                subtitle={name}
                 borderRight={true}
               />
             </Col>
@@ -55,7 +53,10 @@ const CustomModal = (props) => {
               />
             </Col>
             <Col xs={12} lg={4}>
-              <ModalComponent1 title={"Phone"} subtitle={userDetails?.phone} />
+              <ModalComponent1
+                title={"Phone"}
+                subtitle={userDetails?.phoneNumber}
+              />
             </Col>
           </Row>
           <hr />
@@ -70,14 +71,16 @@ const CustomModal = (props) => {
             <Col xs={12} lg={4}>
               <ModalComponent1
                 title={"SSN"}
-                subtitle={userDetails?.ssn}
+                subtitle={userDetails?.ssnNumber}
                 borderRight={true}
               />
             </Col>
             <Col xs={12} lg={4}>
               <ModalComponent1
                 title={"Submitted Date"}
-                subtitle={userDetails?.submittedDate}
+                subtitle={moment(userDetails?.submittedDate).format(
+                  "MM/DD/YYYY, hh:mm a"
+                )}
               />
             </Col>
           </Row>
@@ -88,34 +91,37 @@ const CustomModal = (props) => {
             </h4>
             <ButtonGroup>
               <Row>
-                {radios.map((radio, idx) => (
-                  <Col lg={"auto"} key={idx}>
-                    <ToggleButton
-                      key={idx}
-                      id={`radio-${idx}`}
-                      type="radio"
-                      variant="outline-primary custom-outline"
-                      name="radio"
-                      className="mb-4 text-start rounded-0"
-                      value={radio.value}
-                      checked={radioValue === radio.value}
-                      onChange={(e) => setRadioValue(e.currentTarget.value)}
-                    >
-                      <Stack>
-                        <span>
-                          <span className="fw-bold">Loan Type:</span> 3
-                        </span>
-                        <span>
-                          <span className="fw-bold">Loan ID:</span> 3
-                        </span>
-                        <span>
-                          <span className="fw-bold">Loan Description:</span> The
-                          is just testing{" "}
-                        </span>
-                      </Stack>
-                    </ToggleButton>
-                  </Col>
-                ))}
+                {Array(5)
+                  .fill()
+                  .map((_, index) => index)
+                  .map((el, index) => (
+                    <Col lg={"auto"} key={index}>
+                      <ToggleButton
+                        key={index}
+                        id={`loan-${index}`}
+                        type="radio"
+                        variant="outline-primary custom-outline"
+                        name="loan"
+                        className="mb-4 text-start rounded-0"
+                        value={index}
+                        checked={loan === el}
+                        onChange={(e) => setLoan(Number(e.currentTarget.value))}
+                      >
+                        <Stack>
+                          <span>
+                            <span className="fw-bold">Loan Type:</span> {el}
+                          </span>
+                          <span>
+                            <span className="fw-bold">Loan ID:</span> {index}
+                          </span>
+                          <span>
+                            <span className="fw-bold">Loan Description:</span>{" "}
+                            The is just testing{" "}
+                          </span>
+                        </Stack>
+                      </ToggleButton>
+                    </Col>
+                  ))}
               </Row>
             </ButtonGroup>
           </Row>

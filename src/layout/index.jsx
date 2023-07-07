@@ -12,7 +12,14 @@ const Layout = () => {
 
   const { user, token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-
+  useEffect(() => {
+    if (!(user && token)) {
+      delete axios.defaults.headers.common.Authorization;
+      navigate("/login", { replace: true });
+    } else {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    }
+  });
   const [sidebar, setSidebar] = useState(false);
   const handleSidebar = () => {
     setSidebar(!sidebar);
@@ -46,14 +53,6 @@ const Layout = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (!(user && token)) {
-      delete axios.defaults.headers.common.Authorization;
-      navigate("/login", { replace: true });
-    } else {
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    }
-  }, [navigate, user, token]);
   return (
     <div
       style={{

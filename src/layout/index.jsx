@@ -1,25 +1,28 @@
-import React, { useEffect, useState } from "react";
-import Sidebar from "./Sidebar";
+import React, { Suspense, lazy, useEffect, useState } from "react";
+// import Sidebar from "./Sidebar";
 import { Outlet, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import config from "../config/config";
-import { useSelector } from "react-redux";
-import axios from "util/axios";
+import Loader from "components/Loader";
+// import { useSelector } from "react-redux";
+// import axios from "util/axios";
+
+const Sidebar = lazy(() => import("./Sidebar"));
 
 const Layout = () => {
   let root = document.documentElement;
   let screenWidth = window.innerWidth;
 
-  const { user, token } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!(user && token)) {
-      delete axios.defaults.headers.common.Authorization;
-      navigate("/login", { replace: true });
-    } else {
-      axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    }
-  });
+  // const { user, token } = useSelector((state) => state.auth);
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (!(user && token)) {
+  //     delete axios.defaults.headers.common.Authorization;
+  //     navigate("/login", { replace: true });
+  //   } else {
+  //     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  //   }
+  // });
   const [sidebar, setSidebar] = useState(false);
   const handleSidebar = () => {
     setSidebar(!sidebar);
@@ -54,18 +57,20 @@ const Layout = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        paddingLeft: "var(--sidebar)",
-        transition: "all 300ms ease-in-out",
-      }}
-    >
-      <Sidebar handleSidebar={handleSidebar} isOpenSidebar={sidebar} />
-      <Header handleClick={handleSidebar} />
-      <div style={{ padding: "40px 25px" }}>
-        <Outlet />
+    <Suspense fallback={<Loader />}>
+      <div
+        style={{
+          paddingLeft: "var(--sidebar)",
+          transition: "all 300ms ease-in-out",
+        }}
+      >
+        <Sidebar handleSidebar={handleSidebar} isOpenSidebar={sidebar} />
+        <Header handleClick={handleSidebar} />
+        <div style={{ padding: "40px 25px" }}>
+          <Outlet />
+        </div>
       </div>
-    </div>
+    </Suspense>
   );
 };
 

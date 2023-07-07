@@ -7,7 +7,9 @@ import Login from "pages/Login";
 import ApplyForm from "pages/Apply-Form";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ProtectedRoute from "components/ProtectedRoute";
+import AuthGuard from "util/AuthGuard";
+import TotalAccounts from "pages/Total-Accounts";
+import NotFound from "pages/404";
 
 function App() {
   return (
@@ -17,14 +19,20 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route
           path="/"
-          element={<ProtectedRoute path="/" element={<Layout />} />}
+          element={
+            <AuthGuard>
+              <Layout />
+            </AuthGuard>
+          }
         >
           <Route index element={<Dashboard />} />
           <Route path="/submitted-form" element={<SubmittedForm />} />
+          <Route path="/total-accounts" element={<TotalAccounts />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
         {/* apply form route */}
         <Route path="/apply" element={<ApplyForm />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

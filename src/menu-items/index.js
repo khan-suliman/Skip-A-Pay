@@ -17,6 +17,12 @@ const menuItems = [
     url: "/submitted-form",
   },
   {
+    id: "total-account",
+    title: "Total Accounts",
+    icon: DocumentDuplicateIcon,
+    url: "/total-accounts",
+  },
+  {
     id: "settings",
     title: "Settings",
     icon: Cog6ToothIcon,

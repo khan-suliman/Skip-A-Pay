@@ -22,7 +22,7 @@ const SubmittedForm = () => {
   const handleFilter = (e) => {
     setFilterDate(e.target.value);
     setIsLoading(true);
-    getAllUsers(e.target.value && { date: e.target.value });
+    getAllUsers(e.target.value && { days: e.target.value });
   };
 
   const data = useMemo(() => users, [users]);

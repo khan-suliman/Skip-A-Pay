@@ -1,0 +1,20 @@
+/* Table.css */
+
+.table-container {
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+/* Define different styles for different screen sizes */
+@media (max-width: 600px) {
+  /* Apply styles for small screens */
+  .table-container {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1920px) {
+  /* Apply styles for large screens */
+  .table-container {
+    max-width: 60%;
+  }
+}

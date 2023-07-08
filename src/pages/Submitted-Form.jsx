@@ -29,7 +29,7 @@ const SubmittedForm = () => {
 
   const columns = useMemo(
     () => [
-      { Header: "First Name", accessor: "firstName" },
+      { Header: "First Name", accessor: "firstName", width: 200 },
       { Header: "Middle Name", accessor: "middleName" },
       { Header: "Last Name", accessor: "lastName" },
       { Header: "Email", accessor: "email" },

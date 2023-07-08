@@ -30,16 +30,16 @@ const CustomModal = (props) => {
     if (loan) {
       const response = await handleSubmitForm({ ...userDetails, loan });
       if (response.status === 201 || response.status === 200) {
-        toast.success('Loan applied successfully');
+        toast.success("Loan applied successfully");
         props.handlereset();
       } else {
         toast.error(response.message);
       }
       props.onHide();
     } else {
-      toast.error('Please select loan type');
+      toast.error("Please select loan type");
     }
-  }
+  };
 
   return (
     <Modal
@@ -105,46 +105,50 @@ const CustomModal = (props) => {
           <hr />
           <Row className="mt-lg-5">
             {/* If array -> user not saved in database. */}
-            {Array.isArray(userDetails.loantype) ?
+            {Array.isArray(userDetails.loantype) ? (
               <h4 className="title">
                 Loan Details <small>(select one loan)</small>
               </h4>
-              :
+            ) : (
               <h4 className="title">
-                Loan Details
+                Loan Details <small>(You have already applied.)</small>
               </h4>
-            }
+            )}
             <ButtonGroup>
               <Row>
                 {/* If array -> user not saved in database. then it will show here all loan types then user will select one loan here*/}
-                {Array.isArray(userDetails.loantype) ? userDetails?.loantype?.map((el, index) => (
-                  <Col lg={"auto"} key={index}>
-                    <ToggleButton
-                      key={index}
-                      id={`loan-${index}`}
-                      type="radio"
-                      variant="outline-primary custom-outline"
-                      name="loan"
-                      className="mb-4 text-start rounded-0"
-                      value={el._id}
-                      checked={loan === el._id}
-                      onChange={(e) => setLoan(e.currentTarget.value)}
-                    >
-                      <Stack>
-                        <span>
-                          <span className="fw-bold">Loan Type:</span> {el.loan_type}
-                        </span>
-                        <span>
-                          <span className="fw-bold">Loan ID:</span> {el.loan_id}
-                        </span>
-                        <span>
-                          <span className="fw-bold">Loan Description:</span>{" "}
-                          {el.Description}{" "}
-                        </span>
-                      </Stack>
-                    </ToggleButton>
-                  </Col>
-                )) :
+                {Array.isArray(userDetails.loantype) ? (
+                  userDetails?.loantype?.map((el, index) => (
+                    <Col lg={"auto"} key={index}>
+                      <ToggleButton
+                        key={index}
+                        id={`loan-${index}`}
+                        type="radio"
+                        variant="outline-primary custom-outline"
+                        name="loan"
+                        className="mb-4 text-start rounded-0"
+                        value={el._id}
+                        checked={loan === el._id}
+                        onChange={(e) => setLoan(e.currentTarget.value)}
+                      >
+                        <Stack>
+                          <span>
+                            <span className="fw-bold">Loan Type:</span>{" "}
+                            {el.loan_type}
+                          </span>
+                          <span>
+                            <span className="fw-bold">Loan ID:</span>{" "}
+                            {el.loan_id}
+                          </span>
+                          <span>
+                            <span className="fw-bold">Loan Description:</span>{" "}
+                            {el.Description}{" "}
+                          </span>
+                        </Stack>
+                      </ToggleButton>
+                    </Col>
+                  ))
+                ) : (
                   // here will show if user is already saved,
                   <Col lg={"auto"}>
                     <ToggleButton
@@ -160,10 +164,12 @@ const CustomModal = (props) => {
                     >
                       <Stack>
                         <span>
-                          <span className="fw-bold">Loan Type:</span> {userDetails?.loantype?.loan.loan_type}
+                          <span className="fw-bold">Loan Type:</span>{" "}
+                          {userDetails?.loantype?.loan.loan_type}
                         </span>
                         <span>
-                          <span className="fw-bold">Loan ID:</span> {userDetails?.loantype?.loan.loan_id}
+                          <span className="fw-bold">Loan ID:</span>{" "}
+                          {userDetails?.loantype?.loan.loan_id}
                         </span>
                         <span>
                           <span className="fw-bold">Loan Description:</span>{" "}
@@ -172,20 +178,24 @@ const CustomModal = (props) => {
                       </Stack>
                     </ToggleButton>
                   </Col>
-                }
+                )}
               </Row>
             </ButtonGroup>
           </Row>
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        {Array.isArray(userDetails.loantype) ?
-          <Button onClick={handleSubmitData}>Submit</Button> :
-          <Button onClick={() => {
-            props.onHide()
-            props.handlereset()
-          }}>Close</Button>
-        }
+        {Array.isArray(userDetails.loantype) ? (
+          <Button onClick={handleSubmitData}>Submit</Button>
+        ) : (
+          <Button
+            onClick={() => {
+              props.onHide();
+            }}
+          >
+            Close
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );

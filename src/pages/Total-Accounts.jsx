@@ -25,6 +25,7 @@ const TotalAccounts = () => {
       { Header: "Loan Type", accessor: "loan_type" },
       { Header: "Description", accessor: "Description" },
       { Header: "SSN Number", accessor: "last_ssn_digits" },
+      { Header: "Uploaded By", accessor: "owner.name" },
     ],
     []
   );

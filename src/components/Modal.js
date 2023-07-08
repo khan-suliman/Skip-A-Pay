@@ -27,13 +27,18 @@ const CustomModal = (props) => {
   // this submit button will show when user is not saved / applied
   // when submit button is clicked
   const handleSubmitData = async () => {
-    const response = await handleSubmitForm({ ...userDetails, loan });
-    if (response.status === 201 || response.status === 200) {
-      toast.success('Loan applied successfully');
+    if (loan) {
+      const response = await handleSubmitForm({ ...userDetails, loan });
+      if (response.status === 201 || response.status === 200) {
+        toast.success('Loan applied successfully');
+        props.handlereset();
+      } else {
+        toast.error(response.message);
+      }
+      props.onHide();
     } else {
-      toast.error(response.message);
+      toast.error('Please select loan type');
     }
-    props.onHide();
   }
 
   return (
@@ -176,7 +181,10 @@ const CustomModal = (props) => {
       <Modal.Footer>
         {Array.isArray(userDetails.loantype) ?
           <Button onClick={handleSubmitData}>Submit</Button> :
-          <Button onClick={props.onHide}>Close</Button>
+          <Button onClick={() => {
+            props.onHide()
+            props.handlereset()
+          }}>Close</Button>
         }
       </Modal.Footer>
     </Modal>

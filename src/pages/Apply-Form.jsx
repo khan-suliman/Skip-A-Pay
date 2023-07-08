@@ -12,6 +12,14 @@ const ApplyForm = () => {
   const [validated, setValidated] = useState(false);
   const [userDetails, setUserDetails] = useState({});
   const toastId = useRef(null);
+  // form ref
+  const formRef = useRef(null);
+  const handleReset = () => {
+    //  formRef.current.reset
+    resetForm();
+    formRef.current.reset();
+
+  };
   // const navigate = useNavigate();
   // a schema for form or form validations
   const schema = yup.object().shape({
@@ -62,13 +70,13 @@ const ApplyForm = () => {
       }
     },
   });
-  const { errors, touched, handleSubmit, handleChange } = formik;
+  const { errors, touched, handleSubmit, handleChange, resetForm } = formik;
   return (
     <Container>
       {/* <ToastContainer /> */}
       <Row className="min-vh-100 align-items-center justify-content-center my-auto">
         <Col md={10} lg={8} xl={7} xxl={6}>
-          <Form noValidate onSubmit={handleSubmit} validated={validated}>
+          <Form ref={formRef} noValidate onSubmit={handleSubmit} validated={validated}>
             <Card title="Application Form">
               <Row className="mt-5">
                 <Col md={6}>
@@ -186,6 +194,7 @@ const ApplyForm = () => {
                     <Button
                       as="input"
                       type="reset"
+                      // onClick={handleReset}
                       value="Reset"
                       variant="danger"
                     />
@@ -202,6 +211,7 @@ const ApplyForm = () => {
         show={modalShow}
         title={"Loan Details"}
         onHide={() => setModalShow(false)}
+        handlereset={handleReset}
       />
     </Container>
   );

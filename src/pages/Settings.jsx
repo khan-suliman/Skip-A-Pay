@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import { Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import axios from "util/axios";
+import * as yup from "yup";
 
 const Settings = () => {
   const toastId = useRef(null);
@@ -46,11 +47,18 @@ const Settings = () => {
       });
     setSubmitting(false);
   };
+  const schema = yup.object().shape({
+    loan: yup.mixed().required("File is required."),
+  });
   return (
     <Card title="Settings" backgroundColor="var(--magnolia)">
       <div className="py-3">
-        <Formik initialValues={{ loan: "" }} onSubmit={handleSubmit}>
-          {({ handleSubmit, setFieldValue, isSubmitting }) => (
+        <Formik
+          initialValues={{ loan: "" }}
+          validationSchema={schema}
+          onSubmit={handleSubmit}
+        >
+          {({ handleSubmit, setFieldValue, isSubmitting, errors }) => (
             <Form onSubmit={handleSubmit}>
               <FileUpload
                 name="loan"
@@ -58,6 +66,7 @@ const Settings = () => {
                 supportedFile={[".csv", ".xlsx"]}
                 ref={fileUploadRef}
               />
+              {errors.loan && <p className="text-danger">{errors.loan}</p>}
               <Button variant="primary" type="submit" disabled={isSubmitting}>
                 Upload
               </Button>

@@ -29,6 +29,7 @@ const Dashboard = () => {
             subtitle={accountCount}
             icon={UserGroupIcon}
             backgroundColor={"var(--blue)"}
+            to={"/total-accounts"}
           />
         </Col>
         <Col xs="auto">
@@ -37,6 +38,7 @@ const Dashboard = () => {
             subtitle={loanCount}
             icon={BanknotesIcon}
             backgroundColor={"var(--purple)"}
+            to={"/submitted-form"}
           />
         </Col>
       </Row>

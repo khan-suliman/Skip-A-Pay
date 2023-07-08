@@ -2,6 +2,7 @@ import {
   Cog6ToothIcon,
   DocumentDuplicateIcon,
   Squares2X2Icon,
+  UsersIcon,
 } from "@heroicons/react/24/outline";
 const menuItems = [
   {
@@ -15,6 +16,12 @@ const menuItems = [
     title: "Submitted Form",
     icon: DocumentDuplicateIcon,
     url: "/submitted-form",
+  },
+  {
+    id: "total-account",
+    title: "Total Accounts",
+    icon: UsersIcon,
+    url: "/total-accounts",
   },
   {
     id: "settings",

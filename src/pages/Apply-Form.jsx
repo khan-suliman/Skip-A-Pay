@@ -42,23 +42,24 @@ const ApplyForm = () => {
         closeOnClick: false,
       });
       toast.dismiss(toastId.current);
-      setUserDetails(values);
-      setModalShow(true);
-      // const response = await formSubmission(values);
-      // if (response.status === 201 || response.status === 200) {
-      //   toast.dismiss(toastId.current);
-      //   setUserDetails(values);
-      //   setModalShow(true);
-      // } else {
-      //   toast.update(toastId.current, {
-      //     render: response.message,
-      //     type: "error",
-      //     isLoading: false,
-      //     autoClose: 5000,
-      //     closeButton: true,
-      //     closeOnClick: true,
-      //   });
-      // }
+      const response = await formSubmission(values);
+      if (response.status === 201 || response.status === 200) {
+        toast.dismiss(toastId.current);
+        setUserDetails({
+          ...values,
+          loantype: response.data
+        });
+        setModalShow(true);
+      } else {
+        toast.update(toastId.current, {
+          render: response.message,
+          type: "error",
+          isLoading: false,
+          autoClose: 5000,
+          closeButton: true,
+          closeOnClick: true,
+        });
+      }
     },
   });
   const { errors, touched, handleSubmit, handleChange } = formik;

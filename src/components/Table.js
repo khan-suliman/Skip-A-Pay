@@ -17,22 +17,21 @@ const ReactTable = ({ data, columns }) => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  style={{ minWidth: "170px" }}
-                >
-                  {column.render("Header")}
-                  <span className="float-end">
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <ChevronDownIcon width={14} />
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <div className="d-flex justify-content-between">
+                    <span>{column.render("Header")}</span>
+                    <span className="float-end">
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <ChevronDownIcon width={14} />
+                        ) : (
+                          <ChevronUpIcon width={14} />
+                        )
                       ) : (
-                        <ChevronUpIcon width={14} />
-                      )
-                    ) : (
-                      <ChevronUpDownIcon width={18} />
-                    )}
-                  </span>
+                        <ChevronUpDownIcon width={18} />
+                      )}
+                    </span>
+                  </div>
                 </th>
               ))}
             </tr>

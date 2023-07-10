@@ -2,13 +2,23 @@
 
 .table-container {
   overflow-x: auto; /* Enable horizontal scrolling */
+  th {
+    white-space: nowrap;
+    vertical-align: middle;
+    span {
+      display: inline-block;
+    }
+  }
 }
 
 /* Define different styles for different screen sizes */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   /* Apply styles for small screens */
   .table-container {
     max-width: 100%;
+    th {
+      min-width: 170px;
+    }
   }
 }
 

@@ -51,7 +51,7 @@ const Settings = () => {
     loan: yup.mixed().required("File is required."),
   });
   return (
-    <Card title="Settings" backgroundColor="var(--magnolia)">
+    <Card title="Settings">
       <div className="py-3">
         <Formik
           initialValues={{ loan: "" }}

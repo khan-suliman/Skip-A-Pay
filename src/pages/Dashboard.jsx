@@ -28,7 +28,7 @@ const Dashboard = () => {
             title={"Accounts"}
             subtitle={accountCount}
             icon={UserGroupIcon}
-            backgroundColor={"var(--blue)"}
+            backgroundColor="var(--blue)"
             to={"/total-accounts"}
           />
         </Col>

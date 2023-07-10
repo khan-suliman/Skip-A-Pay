@@ -30,7 +30,7 @@ const TotalAccounts = () => {
     []
   );
   return (
-    <Card title="Total Accounts" backgroundColor={"var(--isabelline)"}>
+    <Card title="Total Accounts">
       <div className="py-3">
         {isLoading ? (
           <Spinner animation="border" role="status">

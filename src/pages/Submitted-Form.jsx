@@ -40,7 +40,7 @@ const SubmittedForm = () => {
     []
   );
   return (
-    <Card title="Submitted Form" backgroundColor={"var(--isabelline)"}>
+    <Card title="Submitted Form">
       <div className="py-3">
         {isLoading ? (
           <Spinner animation="border" role="status">

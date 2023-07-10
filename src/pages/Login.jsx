@@ -55,7 +55,7 @@ const Login = () => {
   // const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      email: "sulimansayed003@gmial.com",
+      email: "",
       password: "",
     },
     onSubmit: async (values) => {
@@ -79,7 +79,7 @@ const Login = () => {
                   label="Email"
                   name="email"
                   type="email"
-                  placeholder="info@test.com"
+                  placeholder="info@mail.com"
                   handleChange={formik.handleChange}
                 />
               </div>

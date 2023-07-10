@@ -31,7 +31,6 @@ const CustomModal = (props) => {
       const response = await handleSubmitForm({ ...userDetails, loan });
       if (response.status === 201 || response.status === 200) {
         toast.success("Loan applied successfully");
-        props.handlereset();
       } else {
         toast.error(response.message);
       }

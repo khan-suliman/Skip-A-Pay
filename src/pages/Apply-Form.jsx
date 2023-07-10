@@ -74,6 +74,7 @@ const ApplyForm = () => {
             noValidate
             onSubmit={handleSubmit}
             validated={validated}
+            className="py-3"
           >
             <Card title="Application Form">
               <Row className="mt-5">

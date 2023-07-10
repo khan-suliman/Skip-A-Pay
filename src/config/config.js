@@ -2,6 +2,6 @@ const config = {
   siteName: "Skip A Pay",
   logo: "",
   hideSidebar: 992,
-  server: "http://localhost:3001/",
+  server: "https://skip-a-pay-api.cyclic.app/",
 };
 export default config;

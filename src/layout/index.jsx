@@ -1,11 +1,8 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
-// import Sidebar from "./Sidebar";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import config from "../config/config";
 import Loader from "components/Loader";
-// import { useSelector } from "react-redux";
-// import axios from "util/axios";
 
 const Sidebar = lazy(() => import("./Sidebar"));
 
@@ -13,16 +10,6 @@ const Layout = () => {
   let root = document.documentElement;
   let screenWidth = window.innerWidth;
 
-  // const { user, token } = useSelector((state) => state.auth);
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!(user && token)) {
-  //     delete axios.defaults.headers.common.Authorization;
-  //     navigate("/login", { replace: true });
-  //   } else {
-  //     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  //   }
-  // });
   const [sidebar, setSidebar] = useState(false);
   const handleSidebar = () => {
     setSidebar(!sidebar);

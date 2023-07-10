@@ -17,7 +17,10 @@ const ReactTable = ({ data, columns }) => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <th
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  style={{ minWidth: "170px" }}
+                >
                   {column.render("Header")}
                   <span className="float-end">
                     {column.isSorted ? (

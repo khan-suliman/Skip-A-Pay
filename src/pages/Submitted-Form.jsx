@@ -120,7 +120,11 @@ const SubmittedForm = () => {
           <>
             {data.count > 0 && (
               <>
-                <Stack direction="horizontal" gap={2} className="mb-2">
+                <Stack
+                  direction="horizontal"
+                  gap={2}
+                  className="mb-2 flex-wrap"
+                >
                   <Dropdown>
                     <Dropdown.Toggle
                       variant="light"

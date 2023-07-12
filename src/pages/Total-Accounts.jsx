@@ -44,7 +44,7 @@ const TotalAccounts = () => {
       // },
       { Header: "Loan ID", accessor: "loan_id" },
       { Header: "Name", accessor: "name" },
-      { Header: "Account Number", accessor: "account_n" },
+      { Header: "Account Number", accessor: "account_number" },
       { Header: "Loan Type", accessor: "loan_type" },
       { Header: "Description", accessor: "Description" },
       { Header: "SSN Number", accessor: "last_ssn_digits" },

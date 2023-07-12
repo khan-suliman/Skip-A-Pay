@@ -1,23 +1,30 @@
 import Card from "components/Card";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import ReactTable from "components/Table";
 import submittedApplications from "api/admin/users";
 import { Dropdown, Spinner, Stack } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setSubmittedForms } from "features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import useQuery from "hooks/useQuery";
+import formDownload from "api/user/downloadForm";
+import { saveAs } from "file-saver";
 
 const SubmittedForm = () => {
   const submittedForms = useSelector((state) => state.auth.submittedForms);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const query = useQuery();
+  const toastId = useRef(null);
 
-  const [isLoading, setIsLoading] = useState(!Array.isArray(submittedForms));
+  const [isLoading, setIsLoading] = useState(
+    !Array.isArray(submittedForms?.users)
+  );
   const [filterDate, setFilterDate] = useState({});
   const [filterLabel, setFilterLabel] = useState("Filter by Date");
 
+  //filter option
   const filterDays = [7, 14, 30];
 
   const getAllUsers = async (params = {}) => {
@@ -33,11 +40,15 @@ const SubmittedForm = () => {
         ? { label: `Last ${days} days`, value: days }
         : ""
     );
+    days && setFilterLabel(`Last ${days} days`);
+
     getAllUsers(days && { days });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   let data = useMemo(() => submittedForms, [submittedForms]);
+
+  // filter the form data
   const handleFilter = (days) => {
     // let days = e.target.value || 0;
     setFilterDate({ label: `Last ${days} days`, value: days });
@@ -48,6 +59,41 @@ const SubmittedForm = () => {
     } else {
       setFilterLabel(`Filter by Date`);
       navigate({ replace: true });
+    }
+  };
+
+  // download all form in csv format
+  const handleDownload = async (days) => {
+    let param = days ? { days } : { days: 0 };
+    let msg = days
+      ? `Last ${days} days data downloaded.`
+      : "All data downloaded.";
+    toastId.current = toast.loading("Downloading...", {
+      autoClose: false,
+      closeOnClick: false,
+    });
+    let downloadRes = await formDownload(param);
+    if (downloadRes.status === 200) {
+      let fileName = days ? `${days}-days-data.csv` : "all-data.csv";
+      // Save the file using FileSaver.js
+      saveAs(downloadRes.data, fileName);
+      toast.update(toastId.current, {
+        render: msg,
+        type: "success",
+        isLoading: false,
+        autoClose: 5000,
+        closeButton: true,
+        closeOnClick: true,
+      });
+    } else {
+      toast.update(toastId.current, {
+        render: downloadRes.message,
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+        closeButton: true,
+        closeOnClick: true,
+      });
     }
   };
 
@@ -87,12 +133,12 @@ const SubmittedForm = () => {
 
                     <Dropdown.Menu>
                       <Dropdown.Item onClick={() => handleFilter(0)}>
-                        All Data
+                        Filter by Date
                       </Dropdown.Item>
                       {filterDays.map((days, index) => (
                         <Dropdown.Item
                           className={`${
-                            filterDate.value === Number(days) ? "active" : ""
+                            Number(filterDate?.value) === days ? "active" : ""
                           }`}
                           key={index}
                           onClick={() => handleFilter(days)}
@@ -113,10 +159,18 @@ const SubmittedForm = () => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item>All Data</Dropdown.Item>
-                      <Dropdown.Item>Last 7 days</Dropdown.Item>
-                      <Dropdown.Item>Last 14 days</Dropdown.Item>
-                      <Dropdown.Item>Last 30 days</Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleDownload(0)}>
+                        All Data
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleDownload(7)}>
+                        Last 7 days
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleDownload(14)}>
+                        Last 14 days
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleDownload(30)}>
+                        Last 30 days
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </Stack>

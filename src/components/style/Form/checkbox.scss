@@ -6,6 +6,7 @@
     margin-top: 2px !important;
     margin-right: 8px !important;
     border-radius: var(--border-radius-1) !important;
+    cursor: pointer;
 
     &:checked {
       background-color: var(--primary);

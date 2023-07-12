@@ -2,18 +2,18 @@ import Card from "components/Card";
 import React, { useEffect, useMemo, useState } from "react";
 import ReactTable from "components/Table";
 import { Spinner } from "react-bootstrap";
-import { loans } from "features/admin/loans";
+import { getLoans } from "api/admin/loans";
 
 const TotalAccounts = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const getLoans = async () => {
-    let applications = await loans();
+  const getLoansDetails = async () => {
+    let applications = await getLoans();
     setUsers(applications.data);
     setIsLoading(false);
   };
   useEffect(() => {
-    getLoans();
+    getLoansDetails();
   }, []);
   const data = useMemo(() => users, [users]);
 

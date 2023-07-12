@@ -13,8 +13,8 @@ import ModalComponent1 from "./ModalComponent1";
 import "./style/Modal.scss";
 import { useState } from "react";
 import moment from "moment";
-import handleSubmitForm from "features/user/handleSubmitForm";
 import { toast } from "react-toastify";
+import handleSubmitForm from "api/user/handleSubmitForm";
 
 const CustomModal = (props) => {
   const [loan, setLoan] = useState(0);
@@ -157,22 +157,22 @@ const CustomModal = (props) => {
                       variant="outline-primary custom-outline"
                       name="loan"
                       className="mb-4 text-start rounded-0"
-                      value={userDetails?.loantype?.loan._id}
+                      value={userDetails?.loantype?.loan?._id}
                       checked
                       onChange={(e) => setLoan(e.currentTarget.value)}
                     >
                       <Stack>
                         <span>
                           <span className="fw-bold">Loan Type:</span>{" "}
-                          {userDetails?.loantype?.loan.loan_type}
+                          {userDetails?.loantype?.loan?.loan_type}
                         </span>
                         <span>
                           <span className="fw-bold">Loan ID:</span>{" "}
-                          {userDetails?.loantype?.loan.loan_id}
+                          {userDetails?.loantype?.loan?.loan_id}
                         </span>
                         <span>
                           <span className="fw-bold">Loan Description:</span>{" "}
-                          {userDetails?.loantype?.loan.Description}{" "}
+                          {userDetails?.loantype?.loan?.Description}{" "}
                         </span>
                       </Stack>
                     </ToggleButton>

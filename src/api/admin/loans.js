@@ -1,7 +1,7 @@
 import axios from "util/axios";
 
 // get loans
-export const loans = async () => {
+export const getLoans = async () => {
   try {
     const response = await axios.get("loans");
     return {

@@ -23,7 +23,7 @@ const Sidebar = ({ isOpenSidebar, handleSidebar }) => {
   }, []);
 
   useEffect(() => {
-    const currentUrl = window.location.pathname;
+    const currentUrl = window.location.pathname.replace(/\/+$/g, '');
     let menuIndex = menuItems.findIndex((item) => item.url === currentUrl);
     setActiveIndex(menuIndex ?? 0);
   }, [location]);

@@ -10,11 +10,13 @@ const Layout = () => {
   let root = document.documentElement;
   let screenWidth = window.innerWidth;
 
-  const [sidebar, setSidebar] = useState(false);
+  const [sidebar, setSidebar] = useState(screenWidth <= config.hideSidebar);
+
   const handleSidebar = () => {
-    setSidebar(!sidebar);
     if (screenWidth <= config.hideSidebar) {
       root.style.setProperty("--sidebar", 0);
+      root.style.setProperty("--menu-indicator-width", "calc(100% - 40px)");
+
       if (!sidebar) {
         document.querySelector("body").classList.add("sidebar-open");
       } else {
@@ -22,6 +24,7 @@ const Layout = () => {
       }
     } else {
       document.querySelector("body").classList.remove("sidebar-open");
+      root.style.setProperty("--menu-indicator-width", "42px");
       root.style.setProperty(
         "--sidebar",
         sidebar && root.style.getPropertyValue("--sidebar") === "270px"
@@ -29,11 +32,38 @@ const Layout = () => {
           : "270px"
       );
     }
+
+    setSidebar(!sidebar);
   };
   const handleResize = () => {
     screenWidth = window.innerWidth;
-    handleSidebar();
+
+    document.querySelector("body").classList.remove("sidebar-open");
+
+    if (screenWidth <= config.hideSidebar) {
+      setSidebar(false);
+
+      root.style.setProperty("--sidebar", 0);
+      root.style.setProperty("--menu-indicator-width", "calc(100% - 40px)");
+    } else {
+      setSidebar(true);
+
+      document.querySelector("body").classList.remove("sidebar-open");
+      root.style.setProperty(
+        "--sidebar",
+        !sidebar && !root.style.getPropertyValue("--sidebar") === "270px"
+          ? "60px"
+          : "270px"
+      );
+      root.style.setProperty(
+        "--menu-indicator-width",
+        root.style.getPropertyValue("--sidebar") === "270px"
+          ? "calc(100% - 40px)"
+          : "42px"
+      );
+    }
   };
+
   useEffect(() => {
     handleSidebar();
     window.addEventListener("resize", handleResize);

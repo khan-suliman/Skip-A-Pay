@@ -6,7 +6,7 @@ import Card from "components/Card";
 import Input from "components/Form/Input";
 import * as yup from "yup";
 import CustomModal from "components/Modal";
-import formSubmission from "features/user/formSubmission";
+import formSubmission from "api/user/formSubmission";
 const ApplyForm = () => {
   const [modalShow, setModalShow] = useState(false);
   const [validated, setValidated] = useState(false);

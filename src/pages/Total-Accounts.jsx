@@ -3,24 +3,30 @@ import React, { useEffect, useMemo, useState } from "react";
 import ReactTable from "components/Table";
 import { Button, Spinner } from "react-bootstrap";
 import Checkbox from "components/Form/Checkbox";
-import CustomPaginations from "components/Pagination";
+import CustomPagination from "components/Pagination";
 import { getLoans } from "api/admin/loans";
 import useQuery from "hooks/useQuery";
+import { useDispatch, useSelector } from "react-redux";
+import { setAccounts } from "features/auth/authSlice";
 
 const TotalAccounts = () => {
   const query = useQuery();
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const accounts = useSelector((state) => state.auth.accounts);
+
+  const [isLoading, setIsLoading] = useState(!Array.isArray(accounts?.loans));
   let skip = query.get("skip") ?? 1;
+
   const getLoansDetails = async (skip) => {
     let applications = await getLoans({ skip, limit: 10 });
-    setUsers(applications.data);
+    dispatch(setAccounts(applications.data));
     setIsLoading(false);
   };
   useEffect(() => {
     getLoansDetails(skip);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skip]);
-  const data = useMemo(() => users, [users]);
+  const data = useMemo(() => accounts, [accounts]);
   const pageCount = useMemo(() => Math.ceil(data.count / 10), [data]);
   const columns = useMemo(
     () => [
@@ -57,13 +63,16 @@ const TotalAccounts = () => {
             </Spinner>
           ) : (
             <>
-              {data.count > 0 && <ReactTable data={data.loans} columns={columns} />}
+              {data.count > 0 && (
+                <>
+                  <ReactTable data={data.loans} columns={columns} />
+                  <CustomPagination count={pageCount} />
+                </>
+              )}
               {data.count === 0 && <p>No form has been submitted yet.</p>}
             </>
           )}
         </div>
-        {/* {pagination} */}
-        <CustomPaginations count={pageCount} />
       </Card>
     </>
   );

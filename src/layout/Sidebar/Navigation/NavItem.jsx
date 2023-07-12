@@ -8,7 +8,7 @@ const NavItem = ({ item }) => {
   const Icon = item.icon;
 
   useEffect(() => {
-    const currentUrl = window.location.pathname.replace(/\/+$/g, '');
+    const currentUrl = window.location.pathname;
     setIsActive(currentUrl === item.url);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);

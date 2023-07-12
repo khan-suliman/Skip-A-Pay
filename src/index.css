@@ -34,6 +34,33 @@ body {
   background-color: var(--off-white) !important;
 }
 
+/* changing scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px var(--grey);
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+/* changing scrollbar  end*/
+
+
 /* borders */
 .red {
   border: 1px solid red;

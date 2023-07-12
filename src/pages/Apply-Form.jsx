@@ -68,7 +68,7 @@ const ApplyForm = () => {
     <Container>
       {/* <ToastContainer /> */}
       <Row className="min-vh-100 align-items-center justify-content-center my-auto">
-        <Col md={10} lg={8} xl={7} xxl={6}>
+        <Col md={10} xxl={8}>
           <Form
             ref={formRef}
             noValidate
@@ -76,7 +76,7 @@ const ApplyForm = () => {
             validated={validated}
             className="py-3"
           >
-            <Card title="Application Form">
+            <Card title="Skip A Pay Application Form">
               <Row className="mt-5">
                 <Col md={6}>
                   <Input
@@ -101,7 +101,7 @@ const ApplyForm = () => {
                     handleChange={handleChange}
                   />
                 </Col>
-                <Col md={6}>
+                <Col xs={12}>
                   <Input
                     label="Last Name"
                     required
@@ -114,7 +114,7 @@ const ApplyForm = () => {
                     error={errors.lastName}
                   />
                 </Col>
-                <Col md={6}>
+                <Col xs={12}>
                   <Input
                     label="Phone Number"
                     required
@@ -153,7 +153,7 @@ const ApplyForm = () => {
                     error={errors.ssnNumber}
                   />
                 </Col>
-                <Col md={6}>
+                <Col xs={12}>
                   <Input
                     label="Email"
                     required
@@ -166,7 +166,7 @@ const ApplyForm = () => {
                     error={errors.email}
                   />
                 </Col>
-                <Col md={6}>
+                <Col xs={12}>
                   <Input
                     label="Confirm Email"
                     required

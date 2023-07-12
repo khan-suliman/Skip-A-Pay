@@ -64,7 +64,7 @@ const SubmittedForm = () => {
 
   // download all form in csv format
   const handleDownload = async (days) => {
-    let param = days ? { days } : { days: 0 };
+    let param = days ? { days } : { days: null };
     let msg = days
       ? `Last ${days} days data downloaded.`
       : "All data downloaded.";

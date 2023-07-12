@@ -25,7 +25,7 @@ const ApplyForm = () => {
       .required("Field Required"),
     ssnNumber: yup
       .string()
-      .matches(/^\d{4}$/, "Enter a valid 4-digit number")
+      .matches(/^\d{3,4}$/, "Enter a valid 3 or 4-digit number")
       .required("Field Required"),
     email: yup.string().email("Invalid Email").required("Field Required"),
     cEmail: yup

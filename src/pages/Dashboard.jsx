@@ -37,7 +37,7 @@ const Dashboard = () => {
       lastSevenDate.setDate(lastSevenDate.getDate() - 7);
       return new Date(account.createdAt) >= lastSevenDate;
     });
-    filterCount = filterData.length;
+    filterCount = filterData?.length;
     return filterCount;
   }, [submittedForms]);
   const accountCount = useMemo(() => accounts?.count || 0, [accounts]);

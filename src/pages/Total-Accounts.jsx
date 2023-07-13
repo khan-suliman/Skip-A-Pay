@@ -6,20 +6,21 @@ import Checkbox from "components/Form/Checkbox";
 import CustomPagination from "components/Pagination";
 import { getLoans } from "api/admin/loans";
 import useQuery from "hooks/useQuery";
-import { useDispatch, useSelector } from "react-redux";
-import { setAccounts } from "features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { setAccountsCount } from "features/auth/authSlice";
 
 const TotalAccounts = () => {
   const query = useQuery();
   const dispatch = useDispatch();
-  const accounts = useSelector((state) => state.auth.accounts);
 
-  const [isLoading, setIsLoading] = useState(!Array.isArray(accounts?.loans));
+  const [isLoading, setIsLoading] = useState(true);
+  const [accounts, setAccounts] = useState([]);
   let skip = query.get("skip") ?? 1;
 
   const getLoansDetails = async (skip) => {
     let applications = await getLoans({ skip, limit: 10 });
-    dispatch(setAccounts(applications.data));
+    dispatch(setAccountsCount(applications.data.count));
+    setAccounts(applications.data.loans);
     setIsLoading(false);
   };
   useEffect(() => {
@@ -27,7 +28,7 @@ const TotalAccounts = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skip]);
   const data = useMemo(() => accounts, [accounts]);
-  const pageCount = useMemo(() => Math.ceil(data.count / 10), [data]);
+  const pageCount = Math.ceil(data.length / 10);
   const columns = useMemo(
     () => [
       // checkbox
@@ -63,13 +64,13 @@ const TotalAccounts = () => {
             </Spinner>
           ) : (
             <>
-              {data.count > 0 && (
+              {data.length > 0 && (
                 <>
-                  <ReactTable data={data.loans} columns={columns} />
+                  <ReactTable data={data} columns={columns} />
                   <CustomPagination count={pageCount} />
                 </>
               )}
-              {data.count === 0 && <p>No form has been submitted yet.</p>}
+              {data.length === 0 && <p>No form has been submitted yet.</p>}
             </>
           )}
         </div>

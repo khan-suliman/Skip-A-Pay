@@ -9,6 +9,8 @@ const submittedApplications = async (params = {}) => {
       data: response.data,
     };
   } catch (e) {
+    console.log(e.response.status);
+
     return {
       status: e.response.status,
       message: e.response.data.error,

@@ -33,6 +33,7 @@ export default function Input({
         type={type}
         placeholder={placeholder}
         name={name}
+        value={value}
         {...props}
       />
       {error && (
@@ -46,7 +47,7 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.any,
   controlId: PropTypes.string,
   required: PropTypes.bool,
   error: PropTypes.string,

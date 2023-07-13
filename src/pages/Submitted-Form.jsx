@@ -3,8 +3,8 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import ReactTable from "components/Table";
 import submittedApplications from "api/admin/users";
 import { Dropdown, Spinner, Stack } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { setSubmittedForms } from "features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { setSubmittedFormsCount } from "features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useQuery from "hooks/useQuery";
@@ -12,24 +12,23 @@ import formDownload from "api/user/downloadForm";
 import { saveAs } from "file-saver";
 
 const SubmittedForm = () => {
-  const submittedForms = useSelector((state) => state.auth.submittedForms);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const query = useQuery();
   const toastId = useRef(null);
 
-  const [isLoading, setIsLoading] = useState(
-    !Array.isArray(submittedForms?.users)
-  );
+  const [isLoading, setIsLoading] = useState(true);
   const [filterDate, setFilterDate] = useState({});
   const [filterLabel, setFilterLabel] = useState("Filter by Date");
+  const [submittedForm, setSubmittedForm] = useState([]);
 
   //filter option
   const filterDays = [7, 14, 30];
 
   const getAllUsers = async (params = {}) => {
     let applications = await submittedApplications(params);
-    dispatch(setSubmittedForms(applications.data));
+    dispatch(setSubmittedFormsCount(applications.data?.count));
+    setSubmittedForm(applications.data.users);
     setIsLoading(false);
   };
 
@@ -46,7 +45,7 @@ const SubmittedForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
-  let data = useMemo(() => submittedForms, [submittedForms]);
+  let data = useMemo(() => submittedForm, [submittedForm]);
 
   // filter the form data
   const handleFilter = (days) => {
@@ -118,7 +117,7 @@ const SubmittedForm = () => {
           </Spinner>
         ) : (
           <>
-            {data.count > 0 && (
+            {data.length > 0 && (
               <>
                 <Stack
                   direction="horizontal"
@@ -178,10 +177,10 @@ const SubmittedForm = () => {
                     </Dropdown.Menu>
                   </Dropdown>
                 </Stack>
-                <ReactTable data={data.users} columns={columns} />
+                <ReactTable data={data} columns={columns} />
               </>
             )}
-            {data.count === 0 && <p>No form has been submitted yet.</p>}
+            {data.length === 0 && <p>No form has been submitted yet.</p>}
           </>
         )}
       </div>

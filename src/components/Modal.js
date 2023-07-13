@@ -18,9 +18,11 @@ import handleSubmitForm from "api/user/handleSubmitForm";
 
 const CustomModal = (props) => {
   const [loan, setLoan] = useState(0);
-
-  const userDetails = props.userdetails;
-
+  console.log(props.userdetails);
+  let userDetails = props.userdetails;
+  if (!Array.isArray(userDetails.loantype)) {
+    userDetails = userDetails.loantype;
+  }
   let name = userDetails?.firstName;
   if (userDetails?.middleName) name += " " + userDetails?.middleName;
   if (userDetails?.lastName) name += " " + userDetails?.lastName;
@@ -95,7 +97,7 @@ const CustomModal = (props) => {
             <Col xs={12} lg={4}>
               <ModalComponent1
                 title={"Submitted Date"}
-                subtitle={moment(userDetails?.submittedDate).format(
+                subtitle={moment(userDetails?.createdAt).format(
                   "MM/DD/YYYY, hh:mm a"
                 )}
               />
@@ -104,7 +106,7 @@ const CustomModal = (props) => {
           <hr />
           <Row className="mt-lg-5">
             {/* If array -> user not saved in database. */}
-            {Array.isArray(userDetails.loantype) ? (
+            {Array.isArray(props.userdetails.loantype) ? (
               <h4 className="title">
                 Loan Details <small>(select one loan)</small>
               </h4>
@@ -116,7 +118,7 @@ const CustomModal = (props) => {
             <ButtonGroup>
               <Row>
                 {/* If array -> user not saved in database. then it will show here all loan types then user will select one loan here*/}
-                {Array.isArray(userDetails.loantype) ? (
+                {Array.isArray(props.userdetails.loantype) ? (
                   userDetails?.loantype?.map((el, index) => (
                     <Col lg={"auto"} key={index}>
                       <ToggleButton
@@ -151,28 +153,28 @@ const CustomModal = (props) => {
                   // here will show if user is already saved,
                   <Col lg={"auto"}>
                     <ToggleButton
-                      key={userDetails?.loantype?.loan?._id}
-                      id={`loan-${userDetails?.loantype?.loan?._id}`}
+                      key={userDetails?.loan?._id}
+                      id={`loan-${userDetails?.loan?._id}`}
                       type="radio"
                       variant="outline-primary custom-outline"
                       name="loan"
                       className="mb-4 text-start rounded-0"
-                      value={userDetails?.loantype?.loan?._id}
+                      value={userDetails?.loan?._id}
                       checked
                       onChange={(e) => setLoan(e.currentTarget.value)}
                     >
                       <Stack>
                         <span>
                           <span className="fw-bold">Loan Type:</span>{" "}
-                          {userDetails?.loantype?.loan?.loan_type}
+                          {userDetails?.loan?.loan_type}
                         </span>
                         <span>
                           <span className="fw-bold">Loan ID:</span>{" "}
-                          {userDetails?.loantype?.loan?.loan_id}
+                          {userDetails?.loan?.loan_id}
                         </span>
                         <span>
                           <span className="fw-bold">Loan Description:</span>{" "}
-                          {userDetails?.loantype?.loan?.Description}{" "}
+                          {userDetails?.loan?.Description}
                         </span>
                       </Stack>
                     </ToggleButton>
@@ -184,7 +186,7 @@ const CustomModal = (props) => {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        {Array.isArray(userDetails.loantype) ? (
+        {Array.isArray(props.userdetails.loantype) ? (
           <Button onClick={handleSubmitData}>Submit</Button>
         ) : (
           <Button

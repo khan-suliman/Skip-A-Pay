@@ -5,8 +5,8 @@ import axios from "util/axios";
 const initialState = {
   user: null,
   token: null,
-  accounts: null,
-  submittedForms: null,
+  accountsCount: 0,
+  submittedFormsCount: 0,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -35,18 +35,18 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.isError = false;
       state.isLoading = false;
-      state.submittedForms = null;
-      state.accounts = null;
+      state.submittedFormsCount = 0;
+      state.accountsCount = 0;
       state.message = "";
     },
-    setSubmittedForms: (state, action) => {
+    setSubmittedFormsCount: (state, action) => {
       return {
         ...state,
-        submittedForms: action.payload,
+        submittedFormsCount: action.payload,
       };
     },
-    setAccounts: (state, action) => {
-      return { ...state, accounts: action.payload };
+    setAccountsCount: (state, action) => {
+      return { ...state, accountsCount: action.payload };
     },
     logout: (state) => {
       delete axios.defaults.headers.common.Authorization;
@@ -80,6 +80,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { reset, logout, setSubmittedForms, setAccounts } =
+export const { reset, logout, setSubmittedFormsCount, setAccountsCount } =
   authSlice.actions;
 export default authSlice.reducer;

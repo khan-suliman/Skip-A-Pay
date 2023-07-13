@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import IconCard from "sections/dashboard/IconCard";
 import {
   BanknotesIcon,
@@ -11,17 +11,27 @@ import Card from "components/Card";
 import submittedApplications from "api/admin/users";
 import { getLoans } from "api/admin/loans";
 import { useDispatch, useSelector } from "react-redux";
-import { setAccounts, setSubmittedForms } from "features/auth/authSlice";
+import {
+  setAccountsCount,
+  setSubmittedFormsCount,
+} from "features/auth/authSlice";
 
 const Dashboard = () => {
-  const { submittedForms, accounts } = useSelector((state) => state.auth);
+  const { submittedFormsCount: loanCount, accountsCount } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
+
+  //FIXME: change to last 7 days loan applied
+  const [sevenDaysCount, setSevenDaysCount] = useState(0);
 
   const getData = async () => {
     let applications = await submittedApplications();
     let accountsRes = await getLoans();
-    dispatch(setAccounts(accountsRes.data));
-    dispatch(setSubmittedForms(applications.data));
+
+    // store the count in redux
+    dispatch(setAccountsCount(accountsRes.data.count));
+    dispatch(setSubmittedFormsCount(applications.data.count));
   };
   useEffect(() => {
     getData();
@@ -29,26 +39,13 @@ const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loanCount = useMemo(() => submittedForms?.count || 0, [submittedForms]);
-  const sevenDaysCount = useMemo(() => {
-    let filterCount = 0;
-    let filterData = submittedForms?.users.filter((account) => {
-      let lastSevenDate = new Date();
-      lastSevenDate.setDate(lastSevenDate.getDate() - 7);
-      return new Date(account.createdAt) >= lastSevenDate;
-    });
-    filterCount = filterData?.length;
-    return filterCount;
-  }, [submittedForms]);
-  const accountCount = useMemo(() => accounts?.count || 0, [accounts]);
-
   return (
     <Card title="Dashboard">
       <Row className="g-3 mt-4">
         <Col xs={12} md={6}>
           <IconCard
             title={"Total Accounts"}
-            subtitle={accountCount}
+            subtitle={accountsCount}
             icon={UserGroupIcon}
             backgroundColor="var(--blue)"
             to={"/total-accounts"}

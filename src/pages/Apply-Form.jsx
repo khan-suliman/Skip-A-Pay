@@ -10,7 +10,10 @@ import formSubmission from "api/user/formSubmission";
 const ApplyForm = () => {
   const [modalShow, setModalShow] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [userDetails, setUserDetails] = useState({});
+  const [userDetails, setUserDetails] = useState({
+    accountNumber: 53709,
+    ssnNumber: 5488,
+  });
   const toastId = useRef(null);
   // form ref
   const formRef = useRef(null);
@@ -63,7 +66,7 @@ const ApplyForm = () => {
       }
     },
   });
-  const { errors, touched, handleSubmit, handleChange } = formik;
+  const { errors, touched, handleSubmit, handleChange, values } = formik;
   return (
     <Container>
       {/* <ToastContainer /> */}
@@ -134,6 +137,7 @@ const ApplyForm = () => {
                     name="accountNumber"
                     controlId="controlId-accountNumber"
                     type="number"
+                    value={values.accountNumber}
                     placeholder="Account Number"
                     handleChange={handleChange}
                     touched={touched.accountNumber && !errors.accountNumber}
@@ -147,6 +151,7 @@ const ApplyForm = () => {
                     controlId="controlId-ssnNumber"
                     name="ssnNumber"
                     type="number"
+                    value={values.ssnNumber}
                     placeholder="SSN"
                     handleChange={handleChange}
                     touched={touched.ssnNumber && !errors.ssnNumber}
@@ -205,12 +210,14 @@ const ApplyForm = () => {
         </Col>
       </Row>
       {/* Form submitted model */}
-      <CustomModal
-        userdetails={userDetails}
-        show={modalShow}
-        title={"Loan Details"}
-        onHide={() => setModalShow(false)}
-      />
+      {modalShow && (
+        <CustomModal
+          userdetails={userDetails}
+          show={modalShow}
+          title={"Loan Details"}
+          onHide={() => setModalShow(false)}
+        />
+      )}
     </Container>
   );
 };

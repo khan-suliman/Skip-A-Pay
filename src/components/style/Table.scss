@@ -1,21 +1,43 @@
 /* Table.css */
 
 .table-container {
-  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-x: auto;
+
+  /* Enable horizontal scrolling */
   th {
     white-space: nowrap;
     vertical-align: middle;
+
     span {
       display: inline-block;
     }
   }
+
+  .deletebtn {
+    --bs-btn-bg: transparent;
+    --bs-btn-color: red;
+    outline: none;
+    --bs-btn-border-color: none;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    margin: auto 0;
+    // transform: translateY(45%);
+
+    svg {
+      width: 22px;
+    }
+  }
 }
+
 
 /* Define different styles for different screen sizes */
 @media (max-width: 768px) {
+
   /* Apply styles for small screens */
   .table-container {
     max-width: 100%;
+
     th {
       min-width: 170px;
     }

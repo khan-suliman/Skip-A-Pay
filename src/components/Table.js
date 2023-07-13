@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import { useTable, useSortBy } from "react-table";
 import {
   ChevronUpIcon,
@@ -57,6 +57,7 @@ const ReactTable = ({ data, columns }) => {
 ReactTable.propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
+  delteButton: PropTypes.bool,
 };
 
 export default ReactTable;

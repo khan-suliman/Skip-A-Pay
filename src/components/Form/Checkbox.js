@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "../style/Form/checkbox.scss";
 
-export default function Checkbox({ label, name, type, id, value, className }) {
+export default function Checkbox({ label, name, type, id, value, className, onChange }) {
   const classes = `custom-checkbox user-select-none ${className}`;
   return (
     <Form.Check // prettier-ignore
@@ -13,6 +13,7 @@ export default function Checkbox({ label, name, type, id, value, className }) {
       name={name}
       value={value}
       className={classes}
+      onChange={onChange}
     />
   );
 }

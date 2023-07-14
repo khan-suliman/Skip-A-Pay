@@ -47,6 +47,9 @@ const CustomPagination = ({ count, className }) => {
 
   // handling paging numbers.
   const renderPageItems = () => {
+    // least number for when pagenumbers more then 100
+    let checkActivePage = 0;
+
     const items = [];
     if (count <= 10) {
       for (let pageNumber = 1; pageNumber < count; pageNumber++) {
@@ -62,29 +65,49 @@ const CustomPagination = ({ count, className }) => {
         );
       }
     } else {
-      for (let pageNumber = 1; pageNumber < 10; pageNumber++) {
-        if (page < 5 && pageNumber < 5) {
+      if (page < (count - 10)) {
+        for (let pageNumber = 1; pageNumber <= 10; pageNumber++) {
           items.push(
             <Pagination.Item
-              value={pageNumber}
-              key={pageNumber}
-              active={pageNumber === page}
+              value={page}
+              key={page + checkActivePage}
+              active={page + checkActivePage === page}
               onClick={handleCurrentPage}
             >
-              {pageNumber}
+              {page + checkActivePage}
             </Pagination.Item>
           );
-        } else {
+          if (pageNumber === 10) {
+            items.push(<Pagination.Ellipsis disabled key={`eclipse-${pageNumber}`} />)
+            items.push(
+              <Pagination.Item
+                value={count}
+                key={count}
+                active={count === page}
+                onClick={handleCurrentPage}
+              >
+                {count}
+              </Pagination.Item>
+            );
+          }
+          checkActivePage++;
+        }
+      } else {
+        for (let pageNumber = 10; pageNumber >= 1; pageNumber--) {
+          if (pageNumber === 10) {
+            items.push(<Pagination.Ellipsis disabled key={`eclipse-${pageNumber}`} />)
+          }
           items.push(
             <Pagination.Item
               value={count - pageNumber}
               key={count - pageNumber}
-              active={(count - pageNumber) === page}
+              active={count - pageNumber === page}
               onClick={handleCurrentPage}
             >
               {count - pageNumber}
             </Pagination.Item>
           );
+          // checkActivePage++;
         }
       }
     }

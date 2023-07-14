@@ -1,9 +1,9 @@
 import axios from "util/axios";
 
 // Login user
-const handleSubmitForm = async (data) => {
+const handleDeleteApiUser = async (id = "") => {
     try {
-        const response = await axios.post("users", data);
+        const response = await axios.delete(`users/${id}`);
         return {
             status: response.status,
             data: response.data,
@@ -16,4 +16,4 @@ const handleSubmitForm = async (data) => {
     }
 };
 
-export default handleSubmitForm;
+export default handleDeleteApiUser;

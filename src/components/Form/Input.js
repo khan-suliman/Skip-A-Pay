@@ -14,10 +14,12 @@ export default function Input({
   error,
   touched,
   required,
+  max,
+  className,
   ...props
 }) {
   return (
-    <Form.Group className="mb-3" controlId={controlId}>
+    <Form.Group className={className ? className : "mb-3"} controlId={controlId}>
       {label && (
         <Form.Label className="input-label mb-0 user-select-none">
           {label}
@@ -34,6 +36,7 @@ export default function Input({
         placeholder={placeholder}
         name={name}
         value={value}
+        max={max}
         {...props}
       />
       {error && (

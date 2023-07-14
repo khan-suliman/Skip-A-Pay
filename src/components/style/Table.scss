@@ -13,9 +13,17 @@
     }
   }
 
+  th,
+  td {
+    vertical-align: middle;
+  }
+
   .deletebtn {
     --bs-btn-bg: transparent;
-    --bs-btn-color: red;
+    --bs-btn-color: rgb(190, 32, 32);
+    --bs-btn-active-bg: transparent;
+    --bs-btn-hover-bg: transparent;
+    --bs-btn-hover-color: hsl(0, 98%, 51%);
     outline: none;
     --bs-btn-border-color: none;
     padding: 0;

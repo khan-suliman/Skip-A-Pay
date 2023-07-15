@@ -22,16 +22,18 @@ const Dashboard = () => {
   );
   const dispatch = useDispatch();
 
-  //FIXME: change to last 7 days loan applied
-  const [sevenDaysCount, setSevenDaysCount] = useState(0);
-
   const getData = async () => {
     let applications = await submittedApplications();
     let accountsRes = await getLoans();
 
     // store the count in redux
     dispatch(setAccountsCount(accountsRes.data.count));
-    dispatch(setSubmittedFormsCount(applications.data.count));
+    dispatch(
+      setSubmittedFormsCount({
+        count: applications.data.count,
+        sevenDaysCount: applications.data.sevenDaysCount,
+      })
+    );
   };
   useEffect(() => {
     getData();
@@ -54,7 +56,7 @@ const Dashboard = () => {
         <Col xs={12} md={6}>
           <IconCard
             title={"Total Loan Applied"}
-            subtitle={loanCount}
+            subtitle={loanCount?.count}
             icon={BanknotesIcon}
             backgroundColor={"var(--purple)"}
             to={"/submitted-form"}
@@ -74,7 +76,7 @@ const Dashboard = () => {
           <IconCard
             title={"Loan Applied"}
             smallTitle={"(last 7days)"}
-            subtitle={sevenDaysCount}
+            subtitle={loanCount?.sevenDaysCount}
             icon={CalendarIcon}
             backgroundColor="var(--blue)"
             to={"/submitted-form?days=7"}

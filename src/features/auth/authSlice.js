@@ -6,7 +6,7 @@ const initialState = {
   user: null,
   token: null,
   accountsCount: 0,
-  submittedFormsCount: 0,
+  submittedFormsCount: { count: 0, sevenDaysCount: 0 },
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -35,18 +35,21 @@ export const authSlice = createSlice({
       state.isSuccess = false;
       state.isError = false;
       state.isLoading = false;
-      state.submittedFormsCount = 0;
+      state.submittedFormsCount = { count: 0, sevenDaysCount: 0 };
       state.accountsCount = 0;
       state.message = "";
     },
     setSubmittedFormsCount: (state, action) => {
       return {
         ...state,
-        submittedFormsCount: action.payload,
+        submittedFormsCount: {
+          count: action.payload.count,
+          sevenDaysCount: action.payload.sevenDaysCount,
+        },
       };
     },
     setAccountsCount: (state, action) => {
-      return { ...state, accountsCount: action.payload };
+      return { ...state, accountsCount: 0 };
     },
     logout: (state) => {
       delete axios.defaults.headers.common.Authorization;
@@ -54,6 +57,12 @@ export const authSlice = createSlice({
         ...state,
         user: null,
         token: null,
+        accountsCount: 0,
+        submittedFormsCount: { count: 0, sevenDaysCount: 0 },
+        isError: false,
+        isSuccess: false,
+        isLoading: false,
+        message: "",
       };
     },
   },

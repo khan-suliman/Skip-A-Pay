@@ -44,7 +44,9 @@ const TotalAccounts = () => {
   const handleChangePageNumber = (event) => {
     if (event.target.value < pageCount) {
       // this value is active page come from input and it will send to url to get an api
-      navigate(`?skip=${event.target.value}`, { replace: true });
+      setTimeout(function () {
+        navigate(`?skip=${event.target.value}`, { replace: true });
+      }, 1000)
     }
   }
   useEffect(() => {
@@ -101,7 +103,7 @@ const TotalAccounts = () => {
                   <Stack direction="horizontal">
                     {/* pagecount come from api where it will all pages */}
                     <CustomPagination count={pageCount} className={'mt-3'} />
-                    <Input max={pageCount} type='number' handleChange={handleChangePageNumber} name='skip' placeholder='page' className='mb-0' />
+                    <Input max={pageCount} type='number' handleChange={handleChangePageNumber} name='skip' placeholder='page' className='mb-0 custom-pagination' />
                   </Stack>
                 </>
               )}

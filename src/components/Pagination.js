@@ -68,7 +68,7 @@ const CustomPagination = ({ count, className }) => {
         for (let pageNumber = 1; pageNumber <= 10; pageNumber++) {
           items.push(
             <Pagination.Item
-              value={page}
+              value={page + checkActivePage}
               key={page + checkActivePage}
               active={page + checkActivePage === page}
               onClick={handleCurrentPage}

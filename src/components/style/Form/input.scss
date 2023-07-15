@@ -1,16 +1,16 @@
 .form-input {
-    padding: 10px !important;
+  padding: 10px !important;
 }
 
 // focus input
 .form-control:focus {
-    border-color: var(--purple) !important;
+  border-color: var(--purple) !important;
 }
 
 .form-control::-webkit-input-placeholder {
-    vertical-align: middle !important;
+  vertical-align: middle !important;
 }
 
 .custom-pagination {
-    width: 70px;
+  width: 75px;
 }

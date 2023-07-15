@@ -16,7 +16,9 @@ const TotalAccounts = () => {
   const navigate = useNavigate();
   const query = useQuery();
   const dispatch = useDispatch();
-  const pageCount = Math.ceil(useSelector(state => state.auth.accountsCount) / 10);
+  const pageCount = Math.ceil(
+    useSelector((state) => state.auth.accountsCount) / 10
+  );
 
   const [isLoading, setIsLoading] = useState(true);
   const [accounts, setAccounts] = useState([]);
@@ -34,11 +36,11 @@ const TotalAccounts = () => {
 
   const handleClose = () => {
     // setdeleteId(value );
-    setShow(false)
+    setShow(false);
   };
   const handleShow = (event) => {
     setdeleteId(event.currentTarget.value);
-    setShow(true)
+    setShow(true);
   };
   // for input page number handleChange
   const handleChangePageNumber = (event) => {
@@ -46,9 +48,9 @@ const TotalAccounts = () => {
       // this value is active page come from input and it will send to url to get an api
       setTimeout(function () {
         navigate(`?skip=${event.target.value}`, { replace: true });
-      }, 1000)
+      }, 1000);
     }
-  }
+  };
   useEffect(() => {
     getLoansDetails(skip);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,7 +89,14 @@ const TotalAccounts = () => {
     <>
       <Card
         title="Total Accounts"
-        actionElement={<Button variant="outline-danger" disabled={!pageCount} onClick={handleShow}>Delete All</Button>}
+        actionElement={
+          !isLoading &&
+          pageCount > 0 && (
+            <Button variant="outline-danger" onClick={handleShow}>
+              Delete All
+            </Button>
+          )
+        }
       >
         {/* <Card title="Total Accounts"> */}
         <div className="py-3">
@@ -100,18 +109,42 @@ const TotalAccounts = () => {
               {data.length > 0 && (
                 <>
                   <ReactTable data={data} columns={columns} />
-                  <Stack direction="horizontal">
-                    {/* pagecount come from api where it will all pages */}
-                    <CustomPagination count={pageCount} className={'mt-3'} />
-                    <Input max={pageCount} type='number' handleChange={handleChangePageNumber} name='skip' placeholder='page' className='mb-0 custom-pagination' />
-                  </Stack>
+                  {pageCount > 10 && (
+                    <>
+                      <Stack direction="horizontal">
+                        {/* pagecount come from api where it will all pages */}
+                        <CustomPagination
+                          count={pageCount}
+                          className={"mt-3"}
+                        />
+                        <Stack direction="horizontal">
+                          <span>Go to</span>
+                          <Input
+                            max={pageCount}
+                            min={1}
+                            type="number"
+                            handleChange={handleChangePageNumber}
+                            name="skip"
+                            placeholder="page"
+                            className="mb-0 custom-pagination"
+                          />
+                        </Stack>
+                      </Stack>
+                    </>
+                  )}
                 </>
               )}
               {data.length === 0 && <p>No form has been submitted yet.</p>}
             </>
           )}
         </div>
-        <DeleteModal getLoansDetails={getLoansDetails} skip={skip} id={deleteId} show={show} handleClose={handleClose} />
+        <DeleteModal
+          getLoansDetails={getLoansDetails}
+          skip={skip}
+          id={deleteId}
+          show={show}
+          handleClose={handleClose}
+        />
       </Card>
     </>
   );

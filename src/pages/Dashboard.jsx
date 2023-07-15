@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import IconCard from "sections/dashboard/IconCard";
 import {
   BanknotesIcon,
@@ -47,7 +47,7 @@ const Dashboard = () => {
         <Col xs={12} md={6}>
           <IconCard
             title={"Total Accounts"}
-            subtitle={accountsCount}
+            subtitle={accountsCount || "0"}
             icon={UserGroupIcon}
             backgroundColor="var(--blue)"
             to={"/total-accounts"}
@@ -56,7 +56,7 @@ const Dashboard = () => {
         <Col xs={12} md={6}>
           <IconCard
             title={"Total Loan Applied"}
-            subtitle={loanCount?.count}
+            subtitle={loanCount?.count || "0"}
             icon={BanknotesIcon}
             backgroundColor={"var(--purple)"}
             to={"/submitted-form"}
@@ -76,7 +76,7 @@ const Dashboard = () => {
           <IconCard
             title={"Loan Applied"}
             smallTitle={"(last 7days)"}
-            subtitle={loanCount?.sevenDaysCount}
+            subtitle={loanCount?.sevenDaysCount || "0"}
             icon={CalendarIcon}
             backgroundColor="var(--blue)"
             to={"/submitted-form?days=7"}

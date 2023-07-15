@@ -49,7 +49,7 @@ export const authSlice = createSlice({
       };
     },
     setAccountsCount: (state, action) => {
-      return { ...state, accountsCount: 0 };
+      return { ...state, accountsCount: action.payload };
     },
     logout: (state) => {
       delete axios.defaults.headers.common.Authorization;

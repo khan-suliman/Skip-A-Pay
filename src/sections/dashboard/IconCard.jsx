@@ -21,7 +21,7 @@ const IconCard = ({ title, subtitle, smallTitle, icon, ...props }) => {
     >
       <span className="circle"></span>
       <span className="circle"></span>
-      <Stack direction="horizontal" className="justify-content-center" gap={3}>
+      <Stack direction="horizontal" className="content" gap={3}>
         {icon && (
           <div className="icon">
             <Icon />

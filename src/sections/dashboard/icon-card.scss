@@ -17,6 +17,12 @@
   &:hover {
     transform: scale(1.01);
   }
+  @media screen and (min-width: 375px) {
+    .content {
+      min-width: 250px;
+      margin: 0 auto;
+    }
+  }
   .icon {
     svg {
       --size: 50px;

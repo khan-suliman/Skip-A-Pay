@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { useTable, useSortBy } from "react-table";
 import {
   ChevronUpIcon,

@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAccountsCount } from "features/auth/authSlice";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Input from "components/Form/Input";
-import { number } from "yup";
 import { useNavigate } from "react-router-dom";
 
 const TotalAccounts = () => {
@@ -44,6 +43,7 @@ const TotalAccounts = () => {
   // for input page number handleChange
   const handleChangePageNumber = (event) => {
     if (event.target.value < pageCount) {
+      // this value is active page come from input and it will send to url to get an api
       navigate(`?skip=${event.target.value}`, { replace: true });
     }
   }
@@ -99,6 +99,7 @@ const TotalAccounts = () => {
                 <>
                   <ReactTable data={data} columns={columns} />
                   <Stack direction="horizontal">
+                    {/* pagecount come from api where it will all pages */}
                     <CustomPagination count={pageCount} className={'mt-3'} />
                     <Input max={pageCount} type='number' handleChange={handleChangePageNumber} name='skip' placeholder='page' className='mb-0' />
                   </Stack>

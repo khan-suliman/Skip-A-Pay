@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Pagination, Stack } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useQuery from "hooks/useQuery";
 import "./style/customPagination.scss";
 
@@ -9,6 +9,7 @@ const CustomPagination = ({ count, className }) => {
   const query = useQuery();
   let skip = query.get("skip") ?? 1;
   const navigate = useNavigate();
+  // this page is actually an active page where it come from url. 
   const [page, setPage] = useState(skip);
 
   // for check page
@@ -20,12 +21,10 @@ const CustomPagination = ({ count, className }) => {
     setisLast(parseInt(skip) >= count);
   }, [skip, count]);
   const handleNext = () => {
-    // const skip = window
     const nextSkip = parseInt(skip) + 1;
     navigate(`?skip=${nextSkip}`);
   };
   const handlePrev = () => {
-    // const skip = window
     const nextSkip = parseInt(skip) - 1;
     navigate(`?skip=${nextSkip}`);
   };
@@ -33,12 +32,10 @@ const CustomPagination = ({ count, className }) => {
     navigate(`?skip=${value.target.getAttribute("value")}`, { replace: true });
   };
   const updateFirst = (value) => {
-    // const skip = window
     const nextSkip = 1;
     navigate(`?skip=${nextSkip}`);
   };
   const updateLast = (value) => {
-    // const skip = window
     const nextSkip = count;
     navigate(`?skip=${nextSkip}`);
   };
@@ -51,6 +48,7 @@ const CustomPagination = ({ count, className }) => {
     let checkActivePage = 0;
 
     const items = [];
+    // if all pages is less then 10 the it will static direct give those pages.  
     if (count <= 10) {
       for (let pageNumber = 1; pageNumber < count; pageNumber++) {
         items.push(
@@ -65,6 +63,7 @@ const CustomPagination = ({ count, className }) => {
         );
       }
     } else {
+      // here page is an active page.
       if (page < (count - 10)) {
         for (let pageNumber = 1; pageNumber <= 10; pageNumber++) {
           items.push(

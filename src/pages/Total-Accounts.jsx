@@ -134,7 +134,7 @@ const TotalAccounts = () => {
                   )}
                 </>
               )}
-              {data.length === 0 && <p>No form has been submitted yet.</p>}
+              {data.length === 0 && <p>No accounts founds.</p>}
             </>
           )}
         </div>

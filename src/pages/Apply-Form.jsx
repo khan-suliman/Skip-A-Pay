@@ -10,10 +10,7 @@ import formSubmission from "api/user/formSubmission";
 const ApplyForm = () => {
   const [modalShow, setModalShow] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [userDetails, setUserDetails] = useState({
-    accountNumber: 53709,
-    ssnNumber: 5488,
-  });
+  const [userDetails, setUserDetails] = useState({});
   const toastId = useRef(null);
   // form ref
   const formRef = useRef(null);

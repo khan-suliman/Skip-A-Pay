@@ -43,8 +43,8 @@ export const authSlice = createSlice({
       return {
         ...state,
         submittedFormsCount: [
-          action.payload.count || state.submittedFormsCount[0],
-          action.payload.daysCount || state.submittedFormsCount[1],
+          action.payload.count ?? state.submittedFormsCount[0],
+          action.payload.daysCount ?? state.submittedFormsCount[1],
         ],
       };
     },

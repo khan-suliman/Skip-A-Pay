@@ -53,7 +53,6 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       delete axios.defaults.headers.common.Authorization;
-      localStorage.clear();
       return {
         ...state,
         user: null,

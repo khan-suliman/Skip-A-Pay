@@ -27,7 +27,11 @@ const SubmittedForm = () => {
 
   const getAllUsers = async (params = {}) => {
     let applications = await submittedApplications(params);
-    dispatch(setSubmittedFormsCount(applications.data?.count));
+    dispatch(
+      setSubmittedFormsCount({
+        count: applications.data?.count,
+      })
+    );
     setSubmittedForm(applications.data.users);
     setIsLoading(false);
   };

@@ -20,18 +20,19 @@ const Dashboard = () => {
   const { submittedFormsCount: loanCount, accountsCount } = useSelector(
     (state) => state.auth
   );
+
   const dispatch = useDispatch();
 
   const getData = async () => {
-    let applications = await submittedApplications();
-    let accountsRes = await getLoans();
+    let applications = await submittedApplications({ count: true, days: 7 });
+    let accountsRes = await getLoans({ count: true });
 
     // store the count in redux
     dispatch(setAccountsCount(accountsRes.data.count));
     dispatch(
       setSubmittedFormsCount({
-        count: applications.data.count,
-        sevenDaysCount: applications.data.sevenDaysCount,
+        count: applications.data?.count,
+        daysCount: applications.data?.daysCount,
       })
     );
   };
@@ -47,7 +48,7 @@ const Dashboard = () => {
         <Col xs={12} md={6}>
           <IconCard
             title={"Total Accounts"}
-            subtitle={accountsCount || "0"}
+            subtitle={String(accountsCount)}
             icon={UserGroupIcon}
             backgroundColor="var(--blue)"
             to={"/total-accounts"}
@@ -56,7 +57,7 @@ const Dashboard = () => {
         <Col xs={12} md={6}>
           <IconCard
             title={"Total Loan Applied"}
-            subtitle={loanCount?.count || "0"}
+            subtitle={String(loanCount[0])}
             icon={BanknotesIcon}
             backgroundColor={"var(--purple)"}
             to={"/submitted-form"}
@@ -76,7 +77,7 @@ const Dashboard = () => {
           <IconCard
             title={"Loan Applied"}
             smallTitle={"(last 7days)"}
-            subtitle={loanCount?.sevenDaysCount || "0"}
+            subtitle={String(loanCount[1])}
             icon={CalendarIcon}
             backgroundColor="var(--blue)"
             to={"/submitted-form?days=7"}

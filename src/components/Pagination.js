@@ -21,11 +21,12 @@ const CustomPagination = ({ count, className }) => {
     setisLast(parseInt(skip) >= count);
   }, [skip, count]);
   const handleNext = () => {
-    const nextSkip = parseInt(skip) + 1;
+    // I took isNaN here because when query passed 
+    const nextSkip = (isNaN(parseInt(skip))?1 : parseInt(skip)) + 1;
     navigate(`?skip=${nextSkip}`);
   };
   const handlePrev = () => {
-    const nextSkip = parseInt(skip) - 1;
+    const nextSkip = (isNaN(parseInt(skip))?2 : parseInt(skip)) - 1;
     navigate(`?skip=${nextSkip}`);
   };
   const handleCurrentPage = (value) => {
@@ -40,7 +41,7 @@ const CustomPagination = ({ count, className }) => {
     navigate(`?skip=${nextSkip}`);
   };
   // classes for pagination
-  let classes = `justify-content-center custom-paginations ${className}`;
+  let classes = `flex-wrap justify-content-center custom-paginations ${className}`;
 
   // handling paging numbers.
   const renderPageItems = () => {

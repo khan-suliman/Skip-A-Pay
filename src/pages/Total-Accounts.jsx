@@ -48,6 +48,12 @@ const TotalAccounts = () => {
       // this value is active page come from input and it will send to url to get an api
       setTimeout(function () {
         navigate(`?skip=${event.target.value}`, { replace: true });
+        // when input is empty
+        if (event.target.value === "") {
+          const url = new URL(window.location.href);
+          url.searchParams.delete("skip");
+          window.history.replaceState({}, "", url.toString());
+        }
       }, 1000);
     }
   };
@@ -111,7 +117,7 @@ const TotalAccounts = () => {
                   <ReactTable data={data} columns={columns} />
                   {pageCount > 10 && (
                     <>
-                      <Stack direction="horizontal">
+                      <Stack direction="horizontal" className="flex-wrap justify-content-end">
                         {/* pagecount come from api where it will all pages */}
                         <CustomPagination
                           count={pageCount}

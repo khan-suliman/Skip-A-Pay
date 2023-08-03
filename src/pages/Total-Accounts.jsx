@@ -22,11 +22,12 @@ const TotalAccounts = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [accounts, setAccounts] = useState([]);
+  let search = query.get("search");
   let skip = query.get("skip") ?? 1;
 
-  const getLoansDetails = async (skip) => {
-    let applications = await getLoans({ skip, limit: 10 });
-    dispatch(setAccountsCount(applications.data.count));
+  const getLoansDetails = async (params) => {
+    let applications = await getLoans({ ...params, limit: 10 });
+    dispatch(setAccountsCount(applications.data?.count));
     setAccounts(applications.data.loans);
     setIsLoading(false);
   };
@@ -52,9 +53,28 @@ const TotalAccounts = () => {
     }
   };
   useEffect(() => {
-    getLoansDetails(skip);
+    let queryParam = {};
+    if (search) {
+      queryParam["search"] = search;
+    }
+    if (skip) {
+      queryParam["skip"] = skip;
+    }
+    getLoansDetails(queryParam);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [skip]);
+  }, [skip, search]);
+
+  // handle search input
+  const handleSearch = (e) => {
+    let searchQuery = e.target.value;
+    if (searchQuery) {
+      setTimeout(() => {
+        navigate("?search=" + searchQuery);
+      }, 1000);
+    } else {
+      navigate({ replace: true });
+    }
+  };
   const data = useMemo(() => accounts, [accounts]);
   // const pageCount = useMemo(() => Math.ceil(accounts / 10), [data]);
   const columns = useMemo(
@@ -106,6 +126,16 @@ const TotalAccounts = () => {
             </Spinner>
           ) : (
             <>
+              <Stack direction="horizontal" gap={2} className="mb-2 flex-wrap">
+                <Input
+                  name="search"
+                  type="search"
+                  placeholder="Search"
+                  handleChange={handleSearch}
+                  className="mb-0 flex-grow-1 flex-md-grow-0"
+                  inputClassName="py-6"
+                />
+              </Stack>
               {data.length > 0 && (
                 <>
                   <ReactTable data={data} columns={columns} />

@@ -1,24 +1,30 @@
-import handleDeleteApiLoan from "api/user/deleteLoan";
+import handleDeleteUsers from "api/user/deleteUser";
 import { toast } from "react-toastify";
 
 const { Modal, Button } = require("react-bootstrap");
 
-const DeleteModal = ({ show, id = "", handleClose, getLoansDetails, skip }) => {
+const SubmitFormDeleteModal = ({
+  show,
+  id = "",
+  handleClose,
+  getAllUsers,
+  skip,
+}) => {
   // handle delete btn
   const handleDelete = async () => {
-    let response = await handleDeleteApiLoan(id);
+    let response = await handleDeleteUsers(id);
     if (response?.data?.acknowledged && response?.status === 202) {
       if (response?.data?.acknowledged > 1) {
-        toast.success("All accounts has been deleted successfully.");
+        toast.success("All submitted forms has been deleted successfully.");
       } else {
-        toast.success("Account is deleted successfully.");
+        toast.success("Submitted form is deleted successfully.");
       }
-      getLoansDetails(skip);
+      getAllUsers(skip);
     } else {
       if (response?.status === 500) {
         toast.error(response.message);
       } else {
-        toast.error("Account not found");
+        toast.error("User data not found");
       }
     }
 
@@ -33,10 +39,11 @@ const DeleteModal = ({ show, id = "", handleClose, getLoansDetails, skip }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Accounts Delete</Modal.Title>
+          <Modal.Title>Delete Submitted Form</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure to delete all accounts. This action can't be undone.
+          Are you sure to delete all submitted forms. This action can't be
+          undone.
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -50,4 +57,4 @@ const DeleteModal = ({ show, id = "", handleClose, getLoansDetails, skip }) => {
     </>
   );
 };
-export default DeleteModal;
+export default SubmitFormDeleteModal;

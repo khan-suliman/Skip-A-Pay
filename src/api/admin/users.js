@@ -5,15 +5,13 @@ const submittedApplications = async (params = {}) => {
   try {
     const response = await axios.get("users", { params });
     return {
-      status: response.status,
-      data: response.data,
+      status: response?.status,
+      data: response?.data,
     };
   } catch (e) {
-    console.log(e.response.status);
-
     return {
-      status: e.response.status,
-      message: e.response.data.error,
+      status: e.response?.status,
+      message: e.response?.data?.error,
     };
   }
 };

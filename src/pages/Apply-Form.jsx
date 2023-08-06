@@ -53,7 +53,8 @@ const ApplyForm = () => {
         setModalShow(true);
       } else {
         toast.update(toastId.current, {
-          render: response.message,
+          render:
+            "Please verify your account number or last 4 of your SSN are correct. For assistance, please reach out via Live Chat during business hours.",
           type: "error",
           isLoading: false,
           autoClose: 5000,

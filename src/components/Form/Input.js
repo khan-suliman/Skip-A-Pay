@@ -17,6 +17,7 @@ export default function Input({
   max,
   min,
   className,
+  inputStyle,
   ...props
 }) {
   return (
@@ -33,7 +34,7 @@ export default function Input({
       <Form.Control
         required={required}
         onChange={handleChange}
-        className="form-input shadow-none"
+        className={`${props?.inputClassName} form-input shadow-none`}
         isValid={touched}
         isInvalid={error}
         type={type}
@@ -42,6 +43,7 @@ export default function Input({
         value={value}
         max={max}
         min={min}
+        style={inputStyle}
         {...props}
       />
       {error && (

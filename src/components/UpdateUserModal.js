@@ -24,14 +24,15 @@ const UpdateUserModal = ({ show, handleClose }) => {
     validationSchema: schema,
     initialValues: user,
     onSubmit: async (values) => {
-      console.log('values', values);
-      const response = await updateAdmin(values);
+      const data = { name: values?.name, email: values?.email };
+      const response = await updateAdmin(data);
       if (response.status === 201 || response.status === 200) {
         dispatch(updateUser({ name: response.data.name, email: response.data.email }));
         toast.success('Updated');
       } else {
         toast.error('Updated', response.message);
       }
+      handleClose();
     },
   });
 

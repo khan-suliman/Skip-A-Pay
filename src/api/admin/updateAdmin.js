@@ -3,8 +3,7 @@ import axios from "util/axios";
 // Login user
 const updateAdmin = async (data) => {
     try {
-        const response = await axios.patch(`/admins/me/`,{...data});
-        console.log('response',response);
+        const response = await axios.patch(`/admins/me/`, { ...data });
         return {
             status: response.status,
             data: response.data,

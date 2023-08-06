@@ -51,6 +51,9 @@ export const authSlice = createSlice({
     setAccountsCount: (state, action) => {
       return { ...state, accountsCount: action.payload };
     },
+    updateUser:(state,action)=>{
+      return { ...state, user: {...state.user,name:action.payload.name,email:action.payload.email} };
+    },
     logout: (state) => {
       delete axios.defaults.headers.common.Authorization;
       return {
@@ -89,6 +92,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { reset, logout, setSubmittedFormsCount, setAccountsCount } =
+export const { reset, logout, setSubmittedFormsCount, setAccountsCount,updateUser } =
   authSlice.actions;
 export default authSlice.reducer;

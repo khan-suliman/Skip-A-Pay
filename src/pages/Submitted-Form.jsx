@@ -100,6 +100,7 @@ const SubmittedForm = () => {
   };
 
   // handle search input
+  let searchTimeout;
   const handleSearch = (e) => {
     let searchQuery = e.target.value;
 
@@ -117,13 +118,12 @@ const SubmittedForm = () => {
     } else {
       queryParams.delete("search");
     }
-
     const queryString = queryParams.toString();
-    let searchTimeout;
 
     if (!queryString) {
       clearTimeout(searchTimeout);
-      return navigate({ replace: true });
+      navigate({ replace: true });
+      return;
     }
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
@@ -182,11 +182,21 @@ const SubmittedForm = () => {
       { Header: "Last Name", accessor: "lastName" },
       { Header: "Email", accessor: "email" },
       { Header: "Account Number", accessor: "accountNumber" },
-      { Header: "Loan ID", accessor: "loan._id" },
+      {
+        Header: "Loan ID",
+        accessor: "loan",
+        Cell: ({ value }) => {
+          return value.map((el, index) => {
+            let splitter;
+            splitter = index + 1 === value.length ? "" : ", ";
+            return el._id + splitter;
+          });
+        },
+      },
       // { Header: "Phone Number", accessor: "phoneNumber" },
       {
         Header: "Submitted Date",
-        accessor: "loan.updatedAt",
+        accessor: "createdAt",
         Cell: ({ value }) => moment(value).format("MM/DD/YYYY, hh:mm a"),
       },
     ],
@@ -236,8 +246,9 @@ const SubmittedForm = () => {
                   </Dropdown.Item>
                   {filterDays.map((days, index) => (
                     <Dropdown.Item
-                      className={`${Number(filterDate?.value) === days ? "active" : ""
-                        }`}
+                      className={`${
+                        Number(filterDate?.value) === days ? "active" : ""
+                      }`}
                       key={index}
                       onClick={() => handleFilter(days)}
                     >

@@ -119,13 +119,16 @@ const SubmittedForm = () => {
     }
 
     const queryString = queryParams.toString();
-    if (queryString) {
-      setTimeout(() => {
-        navigate("?" + queryString);
-      }, 1000);
-    } else {
-      navigate({ replace: true });
+    let searchTimeout;
+
+    if (!queryString) {
+      clearTimeout(searchTimeout);
+      return navigate({ replace: true });
     }
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      navigate("?" + queryString);
+    }, 1000);
   };
 
   // download all form in csv format
@@ -215,7 +218,7 @@ const SubmittedForm = () => {
                 placeholder="Search"
                 handleChange={handleSearch}
                 className="mb-0 flex-grow-1 flex-md-grow-0"
-                inputClassName="py-6"
+                inputclassname="py-6"
               />
               <Dropdown>
                 <Dropdown.Toggle

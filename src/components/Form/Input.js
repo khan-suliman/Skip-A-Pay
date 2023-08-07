@@ -34,7 +34,7 @@ export default function Input({
       <Form.Control
         required={required}
         onChange={handleChange}
-        className={`${props?.inputClassName} form-input shadow-none`}
+        className={`${props?.inputclassname} form-input shadow-none`}
         isValid={touched}
         isInvalid={error}
         type={type}
@@ -61,6 +61,7 @@ Input.propTypes = {
   controlId: PropTypes.string,
   required: PropTypes.bool,
   error: PropTypes.string,
+  inputclassname: PropTypes.string,
 };
 Input.defaultProps = {
   placeholder: PropTypes.string.isRequired,

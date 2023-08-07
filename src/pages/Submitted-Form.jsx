@@ -178,12 +178,12 @@ const SubmittedForm = () => {
   };
   const columns = useMemo(
     () => [
-      { Header: "Loan ID", accessor: "loan._id" },
       { Header: "First Name", accessor: "firstName" },
       { Header: "Last Name", accessor: "lastName" },
       { Header: "Email", accessor: "email" },
       { Header: "Account Number", accessor: "accountNumber" },
-      { Header: "Phone Number", accessor: "phoneNumber" },
+      { Header: "Loan ID", accessor: "loan._id" },
+      // { Header: "Phone Number", accessor: "phoneNumber" },
       {
         Header: "Submitted Date",
         accessor: "loan.updatedAt",
@@ -236,9 +236,8 @@ const SubmittedForm = () => {
                   </Dropdown.Item>
                   {filterDays.map((days, index) => (
                     <Dropdown.Item
-                      className={`${
-                        Number(filterDate?.value) === days ? "active" : ""
-                      }`}
+                      className={`${Number(filterDate?.value) === days ? "active" : ""
+                        }`}
                       key={index}
                       onClick={() => handleFilter(days)}
                     >

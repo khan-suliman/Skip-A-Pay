@@ -302,22 +302,21 @@ const SubmittedForm = () => {
                 <>
                   <Stack direction="horizontal" className="flex-wrap justify-content-end">
                     {/* pagecount come from api where it will all pages */}
-                    <CustomPagination
-                      count={pageCount}
-                      className={"mt-3"}
-                    />
-                    <Stack direction="horizontal">
-                      <span>Go to</span>
-                      <Input
-                        max={pageCount}
-                        min={1}
-                        type="number"
-                        handleChange={handleChangePageNumber}
-                        name="skip"
-                        placeholder="page"
-                        className="mb-0 custom-pagination"
-                      />
-                    </Stack>
+                    {pageCount > 1 && (
+                      <><CustomPagination
+                        count={pageCount}
+                        className={"mt-3"} /><Stack direction="horizontal">
+                          <span>Go to</span>
+                          <Input
+                            max={pageCount}
+                            min={1}
+                            type="number"
+                            handleChange={handleChangePageNumber}
+                            name="skip"
+                            placeholder="page"
+                            className="mb-0 custom-pagination" />
+                        </Stack></>
+                    )}
                   </Stack>
                 </>
               </>

@@ -1,5 +1,4 @@
-import handleDeleteApiLoan from "api/user/deleteLoan";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import Input from "./Form/Input";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -7,15 +6,15 @@ import * as yup from "yup";
 const { Modal, Button, Form, Row, Col } = require("react-bootstrap");
 
 const ChangePasswordModal = ({ show, handleClose }) => {
-  // handling change passwrod
-  const handleChangePassword = () => {
-    if (1 === 1) {
-      toast.success('change password successfully.');
-      handleClose();
-    } else {
-      toast.error('Old password is not correct');
-    }
-  }
+  // handling change password
+  // const handleChangePassword = () => {
+  //   if (true) {
+  //     toast.success("change password successfully.");
+  //     handleClose();
+  //   } else {
+  //     toast.error("Old password is not correct");
+  //   }
+  // };
 
   // a schema for form or form validations
   const schema = yup.object().shape({
@@ -30,7 +29,7 @@ const ChangePasswordModal = ({ show, handleClose }) => {
     validationSchema: schema,
     initialValues: {},
     onSubmit: async (values) => {
-      console.log('values', values);
+      console.log("values", values);
       // const response = await formSubmission(values);
       // if (response.status === 201 || response.status === 200) {
       // } else {
@@ -51,16 +50,13 @@ const ChangePasswordModal = ({ show, handleClose }) => {
           <Modal.Title>Update Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form
-            noValidate
-            className="py-3"
-          >
+          <Form noValidate className="py-3">
             <Row>
               <Col md={12}>
                 <Input
                   label="Old Password"
                   required
-                  controlId="controlId-oldPasword"
+                  controlId="controlId-oldPassword"
                   name="oldPassword"
                   type="text"
                   placeholder="********"
@@ -86,7 +82,7 @@ const ChangePasswordModal = ({ show, handleClose }) => {
                 <Input
                   label="New Confirm Password"
                   required
-                  controlId="controlId-newPassword"
+                  controlId="controlId-newPassword-confirm"
                   name="confirmPassword"
                   type="text"
                   placeholder="********"
@@ -102,7 +98,7 @@ const ChangePasswordModal = ({ show, handleClose }) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="danger" onClick={handleSubmit}>
+          <Button variant="success" onClick={handleSubmit}>
             Change Password
           </Button>
         </Modal.Footer>

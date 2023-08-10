@@ -1,4 +1,11 @@
 {
   "liveSassCompile.settings.includeItems": [],
-  "cSpell.words": ["isabelline", "persistor", "skipapay"]
+  "cSpell.words": [
+    "inputclassname",
+    "isabelline",
+    "loantype",
+    "persistor",
+    "skipapay",
+    "userdetails"
+  ]
 }

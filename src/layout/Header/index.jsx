@@ -15,15 +15,15 @@ import ChangePasswordModal from "components/ChangePasswordModal";
 import UpdateUserModal from "components/UpdateUserModal";
 
 const Header = ({ handleClick }) => {
-  // handle change passowrd modal
+  // handle change password modal
   const [showChangePassword, setShowChangePassword] = useState(false);
   const handleShowChangePasswordModal = () => setShowChangePassword(true);
   const handleCloseChangePasswordModal = () => setShowChangePassword(false);
 
   // handle update user
-  const [showUpdateUserModal, setshowUpdateUserModal] = useState(false);
-  const handleShowUpdateUserModal = () => setshowUpdateUserModal(true);
-  const handleCloseUpdateUserModal = () => setshowUpdateUserModal(false);
+  const [showUpdateUserModal, setShowUpdateUserModal] = useState(false);
+  const handleShowUpdateUserModal = () => setShowUpdateUserModal(true);
+  const handleCloseUpdateUserModal = () => setShowUpdateUserModal(false);
 
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -59,19 +59,21 @@ const Header = ({ handleClick }) => {
                   <span>Update</span>
                 </Stack>
               </li>
-              <li>
-                <Stack
-                  direction="horizontal"
-                  className="auth"
-                  gap={2}
-                  onClick={handleShowChangePasswordModal}
-                >
-                  <span>
-                    <LockClosedIcon />
-                  </span>
-                  <span>Security</span>
-                </Stack>
-              </li>
+              {false && (
+                <li>
+                  <Stack
+                    direction="horizontal"
+                    className="auth"
+                    gap={2}
+                    onClick={handleShowChangePasswordModal}
+                  >
+                    <span>
+                      <LockClosedIcon />
+                    </span>
+                    <span>Security</span>
+                  </Stack>
+                </li>
+              )}
               <li>
                 <Stack
                   direction="horizontal"

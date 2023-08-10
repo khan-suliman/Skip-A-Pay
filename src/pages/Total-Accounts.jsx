@@ -71,15 +71,17 @@ const TotalAccounts = () => {
   }, [skip, search]);
 
   // handle search input
+  let searchTimeout;
   const handleSearch = (e) => {
     let searchQuery = e.target.value;
-    if (searchQuery) {
-      setTimeout(() => {
-        navigate("?search=" + searchQuery);
-      }, 1000);
-    } else {
-      navigate({ replace: true });
+    if (!searchQuery) {
+      clearTimeout(searchTimeout);
+      return navigate({ replace: true });
     }
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      navigate("?search=" + searchQuery);
+    }, 1000);
   };
   const data = useMemo(() => accounts, [accounts]);
   // const pageCount = useMemo(() => Math.ceil(accounts / 10), [data]);
@@ -139,7 +141,7 @@ const TotalAccounts = () => {
                   placeholder="Search"
                   handleChange={handleSearch}
                   className="mb-0 flex-grow-1 flex-md-grow-0"
-                  inputClassName="py-6"
+                  inputclassname="py-6"
                 />
               </Stack>
               {data.length > 0 && (
@@ -147,8 +149,11 @@ const TotalAccounts = () => {
                   <ReactTable data={data} columns={columns} />
                   {pageCount > 10 && (
                     <>
-                      <Stack direction="horizontal" className="flex-wrap justify-content-end">
-                        {/* pagecount come from api where it will all pages */}
+                      <Stack
+                        direction="horizontal"
+                        className="flex-wrap justify-content-end"
+                      >
+                        {/* pageCount come from api where it will all pages */}
                         <CustomPagination
                           count={pageCount}
                           className={"mt-3"}

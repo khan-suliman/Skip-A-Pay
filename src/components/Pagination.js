@@ -22,11 +22,11 @@ const CustomPagination = ({ count, className }) => {
   }, [skip, count]);
   const handleNext = () => {
     // I took isNaN here because when query passed 
-    const nextSkip = (isNaN(parseInt(skip))?1 : parseInt(skip)) + 1;
+    const nextSkip = (isNaN(parseInt(skip)) ? 1 : parseInt(skip)) + 1;
     navigate(`?skip=${nextSkip}`);
   };
   const handlePrev = () => {
-    const nextSkip = (isNaN(parseInt(skip))?2 : parseInt(skip)) - 1;
+    const nextSkip = (isNaN(parseInt(skip)) ? 2 : parseInt(skip)) - 1;
     navigate(`?skip=${nextSkip}`);
   };
   const handleCurrentPage = (value) => {
@@ -51,7 +51,7 @@ const CustomPagination = ({ count, className }) => {
     const items = [];
     // if all pages is less then 10 the it will static direct give those pages.  
     if (count <= 10) {
-      for (let pageNumber = 1; pageNumber < count; pageNumber++) {
+      for (let pageNumber = 1; pageNumber <= count; pageNumber++) {
         items.push(
           <Pagination.Item
             value={pageNumber}

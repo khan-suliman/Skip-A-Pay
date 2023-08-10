@@ -59,21 +59,19 @@ const Header = ({ handleClick }) => {
                   <span>Update</span>
                 </Stack>
               </li>
-              {false && (
-                <li>
-                  <Stack
-                    direction="horizontal"
-                    className="auth"
-                    gap={2}
-                    onClick={handleShowChangePasswordModal}
-                  >
-                    <span>
-                      <LockClosedIcon />
-                    </span>
-                    <span>Security</span>
-                  </Stack>
-                </li>
-              )}
+              <li>
+                <Stack
+                  direction="horizontal"
+                  className="auth"
+                  gap={2}
+                  onClick={handleShowChangePasswordModal}
+                >
+                  <span>
+                    <LockClosedIcon />
+                  </span>
+                  <span>Security</span>
+                </Stack>
+              </li>
               <li>
                 <Stack
                   direction="horizontal"

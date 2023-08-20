@@ -21,10 +21,10 @@ const ChangePasswordModal = ({ show, handleClose }) => {
   // a schema for form or form validations
   const schema = yup.object().shape({
     oldPassword: yup.string().required("Field Required"),
-    password: yup.string().required("Field Required"),
+    password: yup.string().required("Field Required").min(7, 'A minimum of seven characters is required'),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Password doesn't match")
+      .oneOf([yup.ref("password"), null], "Password doesn't match").min(7, 'A minimum of seven characters is required')
       .required("Field Required"),
   });
   const formik = useFormik({

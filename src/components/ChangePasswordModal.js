@@ -24,7 +24,7 @@ const ChangePasswordModal = ({ show, handleClose }) => {
     password: yup.string().required("Field Required"),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Email doesn't match")
+      .oneOf([yup.ref("password"), null], "Password doesn't match")
       .required("Field Required"),
   });
   const formik = useFormik({

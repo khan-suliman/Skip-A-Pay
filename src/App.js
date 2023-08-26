@@ -31,7 +31,8 @@ function App() {
           <Route path="/settings" element={<Settings />} />
         </Route>
         {/* apply form route */}
-        <Route path="/apply" element={<ApplyForm />} />
+        <Route path="/apply-cpfcu" element={<ApplyForm website={'cpfcu'} />} />
+        <Route path="/apply-npcu" element={<ApplyForm website={'npcu'} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

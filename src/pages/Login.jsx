@@ -7,6 +7,7 @@ import Input from "components/Form/Input";
 import Checkbox from "components/Form/Checkbox";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
+import * as yup from "yup";
 import { login, reset } from "features/auth/authSlice";
 
 const Login = () => {
@@ -17,6 +18,14 @@ const Login = () => {
   const { user, message, isLoading, isError, isSuccess } = useSelector(
     (state) => state.auth
   );
+
+  const validationSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Invalid Email")
+      .required("Email field is required."),
+    password: yup.mixed().required("Password filed is required."),
+  });
 
   useEffect(() => {
     if (isError) {
@@ -58,6 +67,7 @@ const Login = () => {
       email: "",
       password: "",
     },
+    validationSchema: validationSchema,
     onSubmit: async (values) => {
       toastId.current = toast.loading("Logging in...", {
         autoClose: false,
@@ -81,6 +91,8 @@ const Login = () => {
                   type="email"
                   placeholder="info@mail.com"
                   handleChange={formik.handleChange}
+                  touched={formik.touched.email && !formik.errors.email}
+                  error={formik.errors.email}
                 />
               </div>
               <Input
@@ -89,6 +101,8 @@ const Login = () => {
                 type="password"
                 placeholder="********"
                 handleChange={formik.handleChange}
+                touched={formik.touched.password && !formik.errors.password}
+                error={formik.errors.password}
               />
               <Stack className="mb-3" direction="horizontal">
                 <Checkbox

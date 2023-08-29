@@ -147,7 +147,7 @@ const TotalAccounts = () => {
               {data.length > 0 && (
                 <>
                   <ReactTable data={data} columns={columns} />
-                  {pageCount > 10 && (
+                  {pageCount > 1 && (
                     <>
                       <Stack
                         direction="horizontal"

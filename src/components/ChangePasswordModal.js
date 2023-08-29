@@ -1,7 +1,9 @@
 // import { toast } from "react-toastify";
+import updatePassword from "api/admin/updatePassword";
 import Input from "./Form/Input";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 
 const { Modal, Button, Form, Row, Col } = require("react-bootstrap");
 
@@ -19,21 +21,24 @@ const ChangePasswordModal = ({ show, handleClose }) => {
   // a schema for form or form validations
   const schema = yup.object().shape({
     oldPassword: yup.string().required("Field Required"),
-    password: yup.string().required("Field Required"),
+    password: yup.string().required("Field Required").min(7, 'A minimum of seven characters is required'),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Email doesn't match")
+      .oneOf([yup.ref("password"), null], "Password doesn't match").min(7, 'A minimum of seven characters is required')
       .required("Field Required"),
   });
   const formik = useFormik({
     validationSchema: schema,
     initialValues: {},
     onSubmit: async (values) => {
-      console.log("values", values);
+      const response = await updatePassword(values);
       // const response = await formSubmission(values);
-      // if (response.status === 201 || response.status === 200) {
-      // } else {
-      // }
+      if (response.status === 201 || response.status === 200) {
+        toast.success("Password updated successfully");
+      } else {
+        toast.error(response.message);
+      }
+      handleClose();
     },
   });
 
@@ -58,7 +63,7 @@ const ChangePasswordModal = ({ show, handleClose }) => {
                   required
                   controlId="controlId-oldPassword"
                   name="oldPassword"
-                  type="text"
+                  type="password"
                   placeholder="********"
                   handleChange={handleChange}
                   touched={touched.oldPassword && !errors.oldPassword}
@@ -71,7 +76,7 @@ const ChangePasswordModal = ({ show, handleClose }) => {
                   required
                   controlId="controlId-newPassword"
                   name="password"
-                  type="text"
+                  type="password"
                   placeholder="********"
                   handleChange={handleChange}
                   touched={touched.password && !errors.password}
@@ -84,7 +89,7 @@ const ChangePasswordModal = ({ show, handleClose }) => {
                   required
                   controlId="controlId-newPassword-confirm"
                   name="confirmPassword"
-                  type="text"
+                  type="password"
                   placeholder="********"
                   handleChange={handleChange}
                   touched={touched.confirmPassword && !errors.confirmPassword}

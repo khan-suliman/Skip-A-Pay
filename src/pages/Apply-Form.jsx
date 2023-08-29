@@ -7,10 +7,10 @@ import Input from "components/Form/Input";
 import * as yup from "yup";
 import CustomModal from "components/Modal";
 import formSubmission from "api/user/formSubmission";
-const ApplyForm = () => {
+const ApplyForm = ({ website }) => {
   const [modalShow, setModalShow] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [userDetails, setUserDetails] = useState({});
+  const [userDetails, setUserDetails] = useState({ website });
   const toastId = useRef(null);
   // form ref
   const formRef = useRef(null);
@@ -135,7 +135,6 @@ const ApplyForm = () => {
                     name="accountNumber"
                     controlId="controlId-accountNumber"
                     type="number"
-                    value={values.accountNumber}
                     placeholder="Account Number"
                     handleChange={handleChange}
                     touched={touched.accountNumber && !errors.accountNumber}
@@ -149,7 +148,6 @@ const ApplyForm = () => {
                     controlId="controlId-ssnNumber"
                     name="ssnNumber"
                     type="number"
-                    value={values.ssnNumber}
                     placeholder="SSN"
                     handleChange={handleChange}
                     touched={touched.ssnNumber && !errors.ssnNumber}

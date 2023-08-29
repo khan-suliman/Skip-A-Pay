@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import ReactTable from "components/Table";
 import submittedApplications from "api/admin/users";
 import { Button, Dropdown, Spinner, Stack } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSubmittedFormsCount } from "features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,13 +13,15 @@ import { saveAs } from "file-saver";
 import Input from "components/Form/Input";
 import moment from "moment";
 import SubmitFormDeleteModal from "components/SubmitFormDeleteModal";
+import CustomPagination from "components/Pagination";
 
 const SubmittedForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const query = useQuery();
   const toastId = useRef(null);
-  const skip = 1;
+  let search = query.get("search");
+  let skip = query.get("skip") ?? 1;
 
   const [isLoading, setIsLoading] = useState(true);
   const [filterDate, setFilterDate] = useState({});
@@ -33,7 +35,7 @@ const SubmittedForm = () => {
   const filterDays = [7, 14, 30];
 
   const getAllUsers = async (params = {}) => {
-    let applications = await submittedApplications(params);
+    let applications = await submittedApplications({ ...params, limit: 10 });
     dispatch(
       setSubmittedFormsCount({
         count: applications.data?.count,
@@ -42,11 +44,34 @@ const SubmittedForm = () => {
     setSubmittedForm(applications.data?.users);
     setIsLoading(false);
   };
+  // for paginaiton
+  const pageCount = Math.ceil(
+    useSelector((state) => state.auth.submittedFormsCount[0]) / 10
+  );
+  console.log(pageCount)
+  // for input page number handleChange
+  const handleChangePageNumber = (event) => {
+    if (event.target.value < pageCount) {
+      // this value is active page come from input and it will send to url to get an api
+      setTimeout(function () {
+        navigate(`?skip=${event.target.value}`, { replace: true });
+        // when input is empty
+        if (event.target.value === "") {
+          const url = new URL(window.location.href);
+          url.searchParams.delete("skip");
+          window.history.replaceState({}, "", url.toString());
+        }
+      }, 1000);
+    }
+  };
 
   useEffect(() => {
     let days = query.get("days");
     let search = query.get("search");
     let queryParams = {};
+    if (skip) {
+      queryParams["skip"] = skip;
+    }
     setFilterDate(
       filterDays.includes(Number(days))
         ? { label: `Last ${days} days`, value: days }
@@ -285,7 +310,31 @@ const SubmittedForm = () => {
                 </Dropdown>
               )}
             </Stack>
-            {data?.length > 0 && <ReactTable data={data} columns={columns} />}
+            {data?.length > 0 && (
+              <>
+                <ReactTable data={data} columns={columns} />
+                <>
+                  <Stack direction="horizontal" className="flex-wrap justify-content-end">
+                    {/* pagecount come from api where it will all pages */}
+                    {pageCount > 1 && (
+                      <><CustomPagination
+                        count={pageCount}
+                        className={"mt-3"} /><Stack direction="horizontal">
+                          <span>Go to</span>
+                          <Input
+                            max={pageCount}
+                            min={1}
+                            type="number"
+                            handleChange={handleChangePageNumber}
+                            name="skip"
+                            placeholder="page"
+                            className="mb-0 custom-pagination" />
+                        </Stack></>
+                    )}
+                  </Stack>
+                </>
+              </>
+            )}
             {data?.length === 0 && (
               <p>No form has been submitted yet or no form found.</p>
             )}

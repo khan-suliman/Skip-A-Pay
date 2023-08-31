@@ -48,7 +48,6 @@ const SubmittedForm = () => {
   const pageCount = Math.ceil(
     useSelector((state) => state.auth.submittedFormsCount[0]) / 10
   );
-  console.log(pageCount)
   // for input page number handleChange
   const handleChangePageNumber = (event) => {
     if (event.target.value < pageCount) {
@@ -314,12 +313,18 @@ const SubmittedForm = () => {
               <>
                 <ReactTable data={data} columns={columns} />
                 <>
-                  <Stack direction="horizontal" className="flex-wrap justify-content-end">
+                  <Stack
+                    direction="horizontal"
+                    className="flex-wrap justify-content-end"
+                  >
                     {/* pagecount come from api where it will all pages */}
                     {pageCount > 1 && (
-                      <><CustomPagination
-                        count={pageCount}
-                        className={"mt-3"} /><Stack direction="horizontal">
+                      <>
+                        <CustomPagination
+                          count={pageCount}
+                          className={"mt-3"}
+                        />
+                        <Stack direction="horizontal">
                           <span>Go to</span>
                           <Input
                             max={pageCount}
@@ -328,8 +333,10 @@ const SubmittedForm = () => {
                             handleChange={handleChangePageNumber}
                             name="skip"
                             placeholder="page"
-                            className="mb-0 custom-pagination" />
-                        </Stack></>
+                            className="mb-0 custom-pagination"
+                          />
+                        </Stack>
+                      </>
                     )}
                   </Stack>
                 </>

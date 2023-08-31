@@ -64,7 +64,7 @@ const ApplyForm = ({ website }) => {
       }
     },
   });
-  const { errors, touched, handleSubmit, handleChange, values } = formik;
+  const { errors, touched, handleSubmit, handleChange } = formik;
   return (
     <Container>
       {/* <ToastContainer /> */}
@@ -184,13 +184,9 @@ const ApplyForm = ({ website }) => {
                   <Stack>
                     <Button as="input" type="submit" value="Get Loan Details" />
                   </Stack>
-                  {/* <Stack direction="horizontal">
-                                    </Stack> */}
-                  {/* <Button as="input" type="reset" value="Reset" /> */}
                 </Col>
                 <Col xs={4} className="mt-4">
                   <Stack>
-                    {/* <Button as="input" type="submit" value="Get Loan Details" /> */}
                     <Button
                       as="input"
                       type="reset"

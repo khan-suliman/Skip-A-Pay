@@ -20,7 +20,6 @@ const SubmittedForm = () => {
   const navigate = useNavigate();
   const query = useQuery();
   const toastId = useRef(null);
-  let search = query.get("search");
   let skip = query.get("skip") ?? 1;
 
   const [isLoading, setIsLoading] = useState(true);
@@ -206,6 +205,11 @@ const SubmittedForm = () => {
       { Header: "Last Name", accessor: "lastName" },
       { Header: "Email", accessor: "email" },
       { Header: "Account Number", accessor: "accountNumber" },
+      {
+        Header: "Website",
+        accessor: "website",
+        Cell: ({ value }) => value?.toUpperCase(),
+      },
       {
         Header: "Loan ID",
         accessor: "loan",

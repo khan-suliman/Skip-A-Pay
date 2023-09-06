@@ -217,7 +217,7 @@ const SubmittedForm = () => {
           return value.map((el, index) => {
             let splitter;
             splitter = index + 1 === value.length ? "" : ", ";
-            return el._id + splitter;
+            return el.loan_id + splitter;
           });
         },
       },

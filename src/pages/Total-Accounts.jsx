@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import ReactTable from "components/Table";
 import { Button, Spinner, Stack } from "react-bootstrap";
 import CustomPagination from "components/Pagination";
-import DeleteModal from "components/DeleteModal";
+import AccountsDeleteModal from "components/AccountDeleteModal";
 import { getLoans } from "api/admin/loans";
 import useQuery from "hooks/useQuery";
 import { useDispatch, useSelector } from "react-redux";
@@ -179,7 +179,7 @@ const TotalAccounts = () => {
             </>
           )}
         </div>
-        <DeleteModal
+        <AccountsDeleteModal
           getLoansDetails={getLoansDetails}
           skip={skip}
           id={deleteId}

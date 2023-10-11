@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 const { Modal, Button } = require("react-bootstrap");
 
-const DeleteModal = ({ show, id = "", handleClose, getLoansDetails, skip }) => {
+const AccountsDeleteModal = ({ show, id = "", handleClose, getLoansDetails, skip }) => {
   // handle delete btn
   const handleDelete = async () => {
     let response = await handleDeleteApiLoan(id);
@@ -36,7 +36,7 @@ const DeleteModal = ({ show, id = "", handleClose, getLoansDetails, skip }) => {
           <Modal.Title>Accounts Delete</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure to delete all accounts. This action can't be undone.
+          Are you sure to delete {id?"account.":"all accounts."} This action can't be undone.
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -50,4 +50,4 @@ const DeleteModal = ({ show, id = "", handleClose, getLoansDetails, skip }) => {
     </>
   );
 };
-export default DeleteModal;
+export default AccountsDeleteModal;

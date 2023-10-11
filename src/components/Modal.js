@@ -31,14 +31,14 @@ const CustomModal = (props) => {
   let name = userDetails?.firstName;
   if (userDetails?.middleName) name += " " + userDetails?.middleName;
   if (userDetails?.lastName) name += " " + userDetails?.lastName;
-  // assign all selected laon here.. 
+  // assign all selected loan here.. 
   const handleLoans = (val) => {
     setLoan(val);
   }
   // this submit button will show when user is not saved / applied
   // when submit button is clicked
   const handleSubmitData = async () => {
-    if (loan) {
+    if (loan.length) {
       const response = await handleSubmitForm({ ...userDetails, loan });
       if (response.status === 201 || response.status === 200) {
         toast.success("Loan applied successfully");
@@ -126,7 +126,9 @@ const CustomModal = (props) => {
             )}
             <ButtonGroup>
               <Row>
-                {/* If array -> user not saved in database. then it will show here all loan types then user will select one loan here*/}
+                {/* If array -> user not saved in database. 
+                    then it will show here all loan types then
+                    user will select one loan here*/}
                 {Array.isArray(props.userdetails.loantype) ? (
                   userDetails?.loantype?.map((el, index) => (
                     <Col lg={"auto"} key={index}>
@@ -230,7 +232,7 @@ const CustomModal = (props) => {
       </Modal.Body>
       <Modal.Footer>
         {Array.isArray(props.userdetails.loantype) ? (
-          <Button onClick={handleSubmitData}>Submit</Button>
+          <Button onClick={handleSubmitData} disabled={!loan.length}>Submit</Button>
         ) : (
           <Button
             onClick={() => {

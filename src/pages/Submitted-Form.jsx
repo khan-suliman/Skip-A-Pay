@@ -14,6 +14,7 @@ import Input from "components/Form/Input";
 import moment from "moment";
 import SubmitFormDeleteModal from "components/SubmitFormDeleteModal";
 import CustomPagination from "components/Pagination";
+import { TrashIcon } from "@heroicons/react/24/outline";
 
 const SubmittedForm = () => {
   const dispatch = useDispatch();
@@ -226,6 +227,22 @@ const SubmittedForm = () => {
         Header: "Submitted Date",
         accessor: "createdAt",
         Cell: ({ value }) => moment(value).format("MM/DD/YYYY, hh:mm a"),
+      },
+      {
+        Header: "Action",
+        accessor: "_id",
+        Cell: ({ value }) => {
+          return (
+            <Button
+              onClick={handleDelete}
+              className="deletebtn"
+              variant="danger"
+              value={value}
+            >
+              <TrashIcon />
+            </Button>
+          );
+        },
       },
     ],
     []

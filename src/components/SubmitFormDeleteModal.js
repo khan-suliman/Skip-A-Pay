@@ -42,8 +42,8 @@ const SubmitFormDeleteModal = ({
           <Modal.Title>Delete Submitted Form</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure to delete all submitted forms. This action can't be
-          undone.
+          Are you sure to delete {id ? "submitted form" : "all submitted forms"}
+          . This action can't be undone.
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

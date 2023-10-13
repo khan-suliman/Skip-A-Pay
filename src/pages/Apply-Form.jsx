@@ -21,7 +21,8 @@ const ApplyForm = ({ website }) => {
     lastName: yup.string().required("Field Required"),
     phoneNumber: yup.number("Please enter integer").required("Field Required"),
     accountNumber: yup
-      .number("Please enter integer")
+      .string()
+      .matches(/^\d+$/, "Enter a valid number")
       .required("Field Required"),
     ssnNumber: yup
       .string()
@@ -134,7 +135,7 @@ const ApplyForm = ({ website }) => {
                     required
                     name="accountNumber"
                     controlId="controlId-accountNumber"
-                    type="number"
+                    type="text"
                     placeholder="Account Number"
                     handleChange={handleChange}
                     touched={touched.accountNumber && !errors.accountNumber}
@@ -147,7 +148,7 @@ const ApplyForm = ({ website }) => {
                     required
                     controlId="controlId-ssnNumber"
                     name="ssnNumber"
-                    type="number"
+                    type="text"
                     placeholder="SSN"
                     handleChange={handleChange}
                     touched={touched.ssnNumber && !errors.ssnNumber}

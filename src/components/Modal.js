@@ -17,37 +17,53 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import handleSubmitForm from "api/user/handleSubmitForm";
 
+/**
+ * CustomModal is a custom React modal component.
+ *
+ * @param {Object} props - The properties for configuring the modal.
+ * @param {string} props.title - The title of the modal.
+ * @param {boolean} props.show - A boolean indicating whether the modal is open or closed.
+ * @param {function} props.onHide - A function to close the modal when triggered.
+ * @param {Object} props.userdetails - The user data object.
+ * @param {Object} props.userdetails.loantype - The user loan object.
+ * @param {Array} props.userdetails.loantype.availableLoans - The user available loans array.
+ * @param {(string|Object)} props.userdetails.loantype.user - The loan information. It can be a string if not applied or an object if applied.
+ */
 const CustomModal = (props) => {
-  // console.log('user', props.userdetails);
-  // assign all ids to loanIds here , this will only get when user was already present in database like if the user was present then database so all of loadids will be assign ehre
-  const loanIds = Array.isArray(props.userdetails.loantype) ? [] : props.userdetails.loantype?.loan?.map(item => item._id);
-
-  const [loan, setLoan] = useState(loanIds);
-
   let userDetails = props.userdetails;
-  if (!Array.isArray(userDetails.loantype)) {
-    userDetails = userDetails.loantype;
-  }
+  let availableLoans = userDetails.loantype.availableLoans;
+
+  let isAlreadyApplied = typeof userDetails.loantype?.user === "object";
+  let isLoansAvailable = availableLoans.length > 0;
+
+  const [loan, setLoan] = useState([]);
+
   let name = userDetails?.firstName;
   if (userDetails?.middleName) name += " " + userDetails?.middleName;
   if (userDetails?.lastName) name += " " + userDetails?.lastName;
-  // assign all selected loan here.. 
+
+  // handle loan selection
   const handleLoans = (val) => {
     setLoan(val);
-  }
-  // this submit button will show when user is not saved / applied
-  // when submit button is clicked
+  };
+
+  // loan form submission
   const handleSubmitData = async () => {
+    if (!loan.length) {
+      return toast.error("Please select at least one Loan");
+    }
     if (loan.length) {
-      const response = await handleSubmitForm({ ...userDetails, loan });
+      const response = isAlreadyApplied
+        ? await handleSubmitForm.update({ ...userDetails, loan })
+        : await handleSubmitForm.create({ ...userDetails, loan });
       if (response.status === 201 || response.status === 200) {
-        toast.success("Loan applied successfully");
+        toast.success(
+          `Loan ${isAlreadyApplied ? "updated" : "applied"} successfully`
+        );
       } else {
         toast.error(response.message);
       }
       props.onHide();
-    } else {
-      toast.error("Please select loan type");
     }
   };
 
@@ -112,127 +128,113 @@ const CustomModal = (props) => {
               />
             </Col>
           </Row>
-          <hr />
           <Row className="mt-lg-5">
-            {/* If array -> user not saved in database. */}
-            {Array.isArray(props.userdetails.loantype) ? (
-              <h4 className="title">
-                Loan Details <small>(Click on the loan(s) you want to skip)</small>
-              </h4>
-            ) : (
-              <h4 className="title">
-                Loan Details <small>(You have already applied.)</small>
-              </h4>
+            {isLoansAvailable && (
+              <>
+                <hr />
+                <h4 className="title">
+                  Loan Details{" "}
+                  <small>(Please select the loan(s) you wish to skip)</small>
+                </h4>
+                <ButtonGroup>
+                  <Row>
+                    {userDetails?.loantype?.availableLoans.map(
+                      (availableLoan, index) => (
+                        <Col lg={"auto"} key={index}>
+                          <ToggleButtonGroup
+                            type="checkbox"
+                            value={loan}
+                            onChange={handleLoans}
+                          >
+                            <ToggleButton
+                              key={index}
+                              id={`loan-${index}`}
+                              variant="outline-primary custom-outline"
+                              name="loan"
+                              className="mb-4 text-start rounded-0"
+                              value={availableLoan._id}
+                              checked={loan === availableLoan._id}
+                            >
+                              <Stack>
+                                <span>
+                                  <span className="fw-bold">Loan Type:</span>{" "}
+                                  {availableLoan.loan_type}
+                                </span>
+                                <span>
+                                  <span className="fw-bold">Loan ID:</span>{" "}
+                                  {availableLoan.loan_id}
+                                </span>
+                                <span>
+                                  <span className="fw-bold">
+                                    Loan Description:
+                                  </span>{" "}
+                                  {availableLoan.Description}{" "}
+                                </span>
+                              </Stack>
+                            </ToggleButton>
+                          </ToggleButtonGroup>
+                        </Col>
+                      )
+                    )}
+                  </Row>
+                </ButtonGroup>
+              </>
             )}
-            <ButtonGroup>
-              <Row>
-                {/* If array -> user not saved in database. 
-                    then it will show here all loan types then
-                    user will select one loan here*/}
-                {Array.isArray(props.userdetails.loantype) ? (
-                  userDetails?.loantype?.map((el, index) => (
-                    <Col lg={"auto"} key={index}>
-                      <ToggleButtonGroup type="checkbox" value={loan} onChange={handleLoans}>
-                        <ToggleButton
-                          key={index}
-                          id={`loan-${index}`}
-                          // type="radio"
-                          variant="outline-primary custom-outline"
-                          name="loan"
-                          className="mb-4 text-start rounded-0"
-                          value={el._id}
-                          checked={loan === el._id}
-                        // onChange={(e) => setLoan(e.currentTarget.value)}
-                        >
-                          <Stack>
-                            <span>
-                              <span className="fw-bold">Loan Type:</span>{" "}
-                              {el.loan_type}
-                            </span>
-                            <span>
-                              <span className="fw-bold">Loan ID:</span>{" "}
-                              {el.loan_id}
-                            </span>
-                            <span>
-                              <span className="fw-bold">Loan Description:</span>{" "}
-                              {el.Description}{" "}
-                            </span>
-                          </Stack>
-                        </ToggleButton>
-                      </ToggleButtonGroup>
-                    </Col>
-                  ))
-                ) : (
-                  // here will show if user is already saved,
-                  userDetails?.loan?.map((el, index) => (
-                    <Col lg={"auto"} key={index}>
-                      <ToggleButtonGroup type="checkbox" value={loan} onChange={handleLoans}>
-                        <ToggleButton
-                          key={index}
-                          id={`loan-${index}`}
-                          // type="radio"
-                          variant="outline-primary custom-outline"
-                          name="loan"
-                          disabled
-                          className="mb-4 text-start rounded-0"
-                          value={el._id}
-                        // onChange={(e) => setLoan(e.currentTarget.value)}
-                        >
-                          <Stack>
-                            <span>
-                              <span className="fw-bold">Loan Type:</span>{" "}
-                              {el.loan_type}
-                            </span>
-                            <span>
-                              <span className="fw-bold">Loan ID:</span>{" "}
-                              {el.loan_id}
-                            </span>
-                            <span>
-                              <span className="fw-bold">Loan Description:</span>{" "}
-                              {el.Description}{" "}
-                            </span>
-                          </Stack>
-                        </ToggleButton>
-                      </ToggleButtonGroup>
-                      {/* <ToggleButton
-                      key={userDetails?.loan?._id}
-                      id={`loan-${userDetails?.loan?._id}`}
-                      // type="radio"
-                      variant="outline-primary custom-outline"
-                      name="loan"
-                      className="mb-4 text-start rounded-0"
-                      value={userDetails?.loan?._id}
-                      checked
-                      onChange={(e) => setLoan(e.currentTarget.value)}
-                    >
-                      <Stack>
-                        <span>
-                          <span className="fw-bold">Loan Type:</span>{" "}
-                          {userDetails?.loan?.loan_type}
-                        </span>
-                        <span>
-                          <span className="fw-bold">Loan ID:</span>{" "}
-                          {userDetails?.loan?.loan_id}
-                        </span>
-                        <span>
-                          <span className="fw-bold">Loan Description:</span>{" "}
-                          {userDetails?.loan?.Description}
-                        </span>
-                      </Stack>
-                    </ToggleButton> */}
-
-                    </Col>
-                  )
-                  )
-                )}
-              </Row>
-            </ButtonGroup>
+            {isAlreadyApplied && (
+              <>
+                <hr />
+                <h4 className="title">Already applied loan(s)</h4>
+                <ButtonGroup>
+                  <Row>
+                    {userDetails?.loantype?.user.loan.map(
+                      (appliedLoan, index) => (
+                        <Col lg={"auto"} key={index}>
+                          <ToggleButtonGroup
+                            type="checkbox"
+                            value={loan}
+                            onChange={handleLoans}
+                          >
+                            <ToggleButton
+                              key={index}
+                              id={`loan-${index}`}
+                              variant="outline-primary custom-outline"
+                              name="loan"
+                              className="mb-4 text-start rounded-0"
+                              disabled
+                            >
+                              <Stack>
+                                <span>
+                                  <span className="fw-bold">Loan Type:</span>{" "}
+                                  {appliedLoan.loan_type}
+                                </span>
+                                <span>
+                                  <span className="fw-bold">Loan ID:</span>{" "}
+                                  {appliedLoan.loan_id}
+                                </span>
+                                <span>
+                                  <span className="fw-bold">
+                                    Loan Description:
+                                  </span>{" "}
+                                  {appliedLoan.Description}{" "}
+                                </span>
+                              </Stack>
+                            </ToggleButton>
+                          </ToggleButtonGroup>
+                        </Col>
+                      )
+                    )}
+                  </Row>
+                </ButtonGroup>
+              </>
+            )}
           </Row>
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        {Array.isArray(props.userdetails.loantype) ? (
-          <Button onClick={handleSubmitData} disabled={!loan.length}>Submit</Button>
+        {isLoansAvailable ? (
+          <Button onClick={handleSubmitData} disabled={!loan.length}>
+            Submit
+          </Button>
         ) : (
           <Button
             onClick={() => {
